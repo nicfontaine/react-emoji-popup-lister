@@ -27,7 +27,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 const fuzzysearch = new _fuzzySearch.default(_gemoji.gemoji, ["names"], {
   sort: true
 });
-const themeDefault = "auto";
+const themeDefault = "dark";
 var elIndex = 0;
 var selStart;
 const EmojiPopup = _ref => {
@@ -53,16 +53,6 @@ const EmojiPopup = _ref => {
   const wrapperRef = (0, _react.useRef)(null);
   const emojiContainerRef = (0, _react.useRef)(null);
   const emojiListerRef = (0, _react.useRef)(null);
-  (0, _react.useEffect)(() => {
-    // Auto theme switch listener
-    if (theme === "auto") {
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => setThemeMode(e.matches ? "dark" : "light"));
-      setThemeMode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      return () => {
-        window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", () => {});
-      };
-    }
-  }, []);
 
   // Reset index, and add display transition class
   (0, _react.useEffect)(() => {
@@ -74,7 +64,7 @@ const EmojiPopup = _ref => {
     }
   }, [active]);
 
-  // Theme change
+  // Theme change styling
   (0, _react.useEffect)(() => {
     wrapperRef.current.classList.remove("theme-light");
     wrapperRef.current.classList.remove("theme-dark");
@@ -82,6 +72,17 @@ const EmojiPopup = _ref => {
       wrapperRef.current.classList.add("theme-".concat(themeMode));
     }
   }, [themeMode]);
+
+  // Theme change events and state
+  (0, _react.useEffect)(() => {
+    if (theme === "auto") {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => setThemeMode(e.matches ? "dark" : "light"));
+      setThemeMode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    } else {
+      setThemeMode(theme);
+      window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", () => {});
+    }
+  }, [theme]);
 
   // Keep emoji row item selection in view
   // Disable functionality if user is navigating with mouse
@@ -278,7 +279,7 @@ const EmojiPopup = _ref => {
     className: "emoji-popup-lister-input"
   }), /*#__PURE__*/React.createElement("div", {
     className: "emoji-popup-lister-container",
-    "aria-label": "".concat(active, " ? \"Emoji popup lister\" : \"\""),
+    "aria-label": active ? "Emoji lister popup" : "",
     ref: emojiContainerRef
   }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     ref: emojiListerRef,

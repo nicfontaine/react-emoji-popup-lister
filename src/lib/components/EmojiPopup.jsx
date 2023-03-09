@@ -5,7 +5,7 @@ import FuzzySearch from "fuzzy-search";
 import emojiSubstring from "../util/emoji-substring";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 
-const themeDefault = "auto";
+const themeDefault = "dark";
 var elIndex = 0;
 var selStart;
 
@@ -34,18 +34,6 @@ const EmojiPopup = ({
 	const emojiContainerRef = useRef(null);
 	const emojiListerRef = useRef(null);
 
-	useEffect(() => {
-		// Auto theme switch listener
-		if (theme === "auto") {
-			window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setThemeMode(e.matches ? "dark" : "light"));
-			setThemeMode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-			return () => {
-				window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", () => {
-				});
-			};
-		}
-	}, []);
-
 	// Reset index, and add display transition class
 	useEffect(() => {
 		if (active) {
@@ -56,7 +44,7 @@ const EmojiPopup = ({
 		}
 	}, [active]);
 
-	// Theme change
+	// Theme change styling
 	useEffect(() => {
 		wrapperRef.current.classList.remove("theme-light");
 		wrapperRef.current.classList.remove("theme-dark");
@@ -64,6 +52,18 @@ const EmojiPopup = ({
 			wrapperRef.current.classList.add(`theme-${themeMode}`);
 		}
 	}, [themeMode]);
+
+	// Theme change events and state
+	useEffect(() => {
+		if (theme === "auto") {
+			window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setThemeMode(e.matches ? "dark" : "light"));
+			setThemeMode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+		} else {
+			setThemeMode(theme);
+			window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", () => {
+			});
+		}
+	}, [theme]);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse
@@ -263,7 +263,7 @@ const EmojiPopup = ({
 				
 				<div
 					className="emoji-popup-lister-container"
-					aria-label={`${active} ? "Emoji popup lister" : ""`}
+					aria-label={active ? "Emoji lister popup" : ""}
 					ref={emojiContainerRef}
 				>
 					<>
