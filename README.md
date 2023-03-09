@@ -43,7 +43,7 @@ function Input (props) {
     ></input>
   );
 }
-export default function ExampleB () {
+export default function ExampleC () {
   // Input state
   const [inputText, setInputText] = useState("");
   // Example event
