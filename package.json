@@ -1,19 +1,30 @@
 {
   "name": "react-emoji-popup-lister",
+  "description": "React emoji search & select by colon syntax, with keyboard navigation",
   "version": "0.1.0",
-  "private": true,
+  "author": "Nic Fontaine <nic@nicfontaine.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicfontaine/react-emoji-popup-lister"
+  },
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -34,5 +45,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+	"keywords": [
+    "react",
+    "emoji",
+    "input",
+    "textarea",
+    "component",
+    "picker",
+		"keyboard",
+		"search"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "fuzzy-search": "^3.2.1",
+    "gemoji": "^8.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   }
 }

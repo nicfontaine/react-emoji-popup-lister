@@ -1,0 +1,68 @@
+module.exports = {
+	env: {
+		browser: true,
+		es2021: true,
+		amd: true,
+		node: true,
+	},
+	extends: [
+		"eslint:recommended",
+		"plugin:react/recommended",
+	],
+	overrides: [],
+	parserOptions: {
+		ecmaVersion: "latest",
+		sourceType: "module",
+	},
+	plugins: ["react"],
+	rules: {
+		indent: [2, "tab"],
+		"no-tabs": 0,
+		"no-empty": "off",
+		"react/prop-types": 0,
+		allowEmptyReject: 0,
+		strict: ["error", "global"],
+		"func-style": ["error", "expression"],
+		"react/react-in-jsx-scope": "off",
+		"arrow-parens": ["error", "always"],
+		"prefer-const": "error",
+		"no-unused-vars": "off",
+		// "multiline-comment-style": ["error", "starred-block"],
+		"spaced-comment": ["error", "always"],
+		semi: ["error", "always"],
+		"semi-spacing": "error",
+		"no-extra-semi": "error",
+		"no-unexpected-multiline": "error",
+		"react/no-unknown-property": ["error", { ignore: ["jsx"] }],
+		"comma-dangle": ["error", "always-multiline"],
+		"space-infix-ops": "error",
+		"brace-style": "error",
+		"space-before-blocks": "error",
+		"space-before-function-paren": [
+			"error",
+			{
+				anonymous: "always",
+				named: "always",
+				asyncArrow: "always",
+			},
+		],
+		"newline-per-chained-call": "error",
+		"space-in-parens": ["error", "never"],
+		"array-bracket-spacing": ["error", "never"],
+		"object-curly-spacing": ["error", "always"],
+		"comma-spacing": [
+			"error",
+			{
+				before: false,
+				after: true,
+			},
+		],
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				max: 1,
+				maxEOF: 1,
+			},
+		],
+	},
+};

@@ -1,0 +1,79 @@
+.emoji-popup-lister-wrapper {
+	position: relative;
+	color: #ddd;
+}
+.emoji-popup-lister-input,
+.emoji-popup-lister-wrapper > input,
+.emoji-popup-lister-wrapper > textarea {
+	width: 100%;
+	box-sizing: border-box;
+	font-size: inherit;
+	font-family: inherit;
+}
+.emoji-popup-lister-container {
+  position: absolute;
+  z-index: 20;
+  bottom: -7px;
+  transform: translateY(100%);
+  background: rgba(0,0,0,0.9);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.emoji-popup-lister {
+  display: flex;
+  flex-direction: column;
+	overflow-y: scroll;
+}
+.emoji-popup-lister-item,
+.emoji-popup-lister-item-null {
+  padding: 0.35rem 0.5rem;
+  display: flex;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255,255,255,0.16);
+}
+.emoji-popup-lister-item.active {
+  background: rgba(255,255,255,0.25);
+  border-bottom: 1px solid transparent;
+}
+.emoji-popup-lister-item:last-child {
+  /* border-bottom: none; */
+}
+.emoji-popup-lister-item .inner {
+	display: flex;
+	min-width: 0;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
+}
+.emoji-popup-lister-item .emoji {
+  margin-right: 0.5rem;
+	margin-left: 0.2rem;
+  /* width: 1.8rem; */
+	display: flex;
+	flex-basis: fit-content;
+}
+.emoji-popup-lister-item .code,
+.emoji-popup-lister-item .emoji {
+  align-self: center;
+}
+.emoji-popup-lister-item .code {
+  font-size: 0.86rem;
+	min-width: 0;
+	text-overflow: ellipsis;
+	overflow-x: hidden;
+}
+.emoji-popup-lister-how-to {
+  padding: 0.6rem 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  font-style: italic;
+  /* background: rgba(255,255,255,0.18); */
+}
+.emoji-popup-lister-how-to code {
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  line-height: 1.2;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255,255,255,0.9);
+}

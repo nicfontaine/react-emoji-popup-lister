@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# React Emoji Popup Lister
+> Slack-lick emoji list and select via keyboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
+Type and insert emojis within your inputs, via their shortcode values (`:cool:`)
 
-## Available Scripts
+## Install
+`npm i -s emoji-popup-lister`
 
-In the project directory, you can run:
+## Usage
+```javascript
+import EmojiPopup from "emoji-popup-lister"
 
-### `npm start`
+// 1. Basic
+export default function ExampleA () {
+	return <EmojiPopup />
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+// 2. Custom styled
+export default function ExampleB () {
+	return (
+		<EmojiPopup
+			listMax="40"
+			maxHeight="200px"
+			maxWidth="300px"
+			placeholder="Your placeholder text"
+		/>
+	);
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+// 3. Provide an input, state, and events from your parent component
+function Input (props) {
+	return (
+		<input
+			// Required. Anything after is optional, and will override values
+			{...props}
+			// Override existing input styles
+			className="your-class-name"
+			placeholder="Your placeholder text"
+			// Use and extend styling inline
+			style={{ ...props.style, padding: "0.5rem" }}
+			//...
+		></input>
+	);
+}
+export default function ExampleB () {
+	const [inputText, setInputText] = useState("");
+	const handleChange = function (e) {
+		console.log(e);
+	};
+	return (
+		{/* Container to align input and popup together */}
+		<div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
+			<EmojiPopup
+				// Use your input component
+				input={Input}
+				// Use state in parent component
+				inputText={inputText}
+				setInputText={setInputText}
+				// Add your event handlers
+				onChange={handleChange}
+			/>
+		</div>
+	);
+}
 
-### `npm test`
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prop Options
+> All are optional
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `input` | HTML input or textarea | `<input>` | Pass your own input element or component |
+| `inputText` | useState `string` value | `""` | Store state in your parent component |
+| `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
+| `listMax` | `number` | `6` | Max number of emoji matches to display |
+| `maxWidth` | `number` | `400px` | Scroll container width cap |
+| `maxHeight` | `number` | `250px` | Scroll container height cap |
+| `placeholder` | `string` | `""` | Input placeholder value |
 
-### `npm run build`
+## Prop Events
+> Place on `<EmojiPopup>` component, **Not** your custom `input` prop as this will override necessary events
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onClick` | `function` | - | Input element click event (* Not emoji list) |
+| `onChange` | `function` | - | Input value change event |
+| `onKeyUp` | `function` | - | Input keyUp event |
+| `onKeyDown` | `function` | - | Input keyDown event |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Styling
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Input
+Input contains the className `emoji-popup-lister-input`. This can also be overridden by passing your own input component with a `className` prop after the required `{...props}`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Popup
+Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
 
-### `npm run eject`
+## Development
+Run a basic example react page from `example/`
+- `cd example`
+- `npm i`
+- `npm start`
+NOTE: Package source code should already be symlinked from `/src/` to `/example/src/src/`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+MIT © [nicfontaine](https://github.com/nicfontaine)
