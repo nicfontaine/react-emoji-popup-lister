@@ -5,6 +5,7 @@ import FuzzySearch from "fuzzy-search";
 import emojiSubstring from "../util/emoji-substring";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 var elIndex = 0;
+var selStart;
 
 const EmojiPopup = ({
 	input,
@@ -25,6 +26,7 @@ const EmojiPopup = ({
 	const [emojiSelect, setEmojiSelect] = useState("");
 	const [mouseNav, setMouseNav] = useState(false);
 	const emojiListerRef = useRef(null);
+	const wrapperRef = useRef(null);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse
@@ -40,6 +42,9 @@ const EmojiPopup = ({
 	// Sync user prop state with internal state
 	useEffect(() => {
 		setUserPropInputText?.(inputText);
+		const inp = wrapperRef.current.children[0];
+		inp.selectionStart = selStart;
+		inp.selectionEnd = selStart;
 	}, [inputText]);
 
 	// Display fuzzy-matched emojis
@@ -50,7 +55,12 @@ const EmojiPopup = ({
 	// Replace emoji string match with emoji, and reset states
 	useEffect(() => {
 		if (emojiSelect) {
+			const inp = wrapperRef.current.children[0];
+			// Calculate selection start, to fix going to the end of input
+			const delta = inp.selectionStart - inputText.indexOf(emojiSearchString);
+			selStart = inp.selectionStart - delta + emojiSelect.length;
 			setInputText(inputText.replace(`${emojiSearchString}`, emojiSelect));
+			console.log([...emojiSelect]);
 			setActive(false);
 			setEmojiSearchString("");
 			setEmojiSelect("");
@@ -100,9 +110,7 @@ const EmojiPopup = ({
 		if (!active) return;
 		
 		const prevent = ["Enter", "ArrowDown", "ArrowUp", "Tab"];
-		if (prevent.indexOf(e.key) > -1) {
-			e.preventDefault();
-		}
+		if (prevent.indexOf(e.key) > -1) e.preventDefault();
 
 		if (e.key === "ArrowUp") {
 			list.prev();
@@ -141,10 +149,15 @@ const EmojiPopup = ({
 	const handleChange = function (e) {
 		// User-passed event
 		props.onChange?.(e);
+		selStart = e.target.selectionStart;
 		setInputText(e.target.value);
 	};
 
 	// List item events
+	const handleItemClick = function (e, emoji) {
+		list.select(emoji);
+		// TODO: Focus back to input
+	};
 	const handleItemMouseEnter = function (e, i) {
 		setMouseNav(true);
 		elIndex = i;
@@ -169,7 +182,7 @@ const EmojiPopup = ({
 
 		<>
 			
-			<div className="emoji-popup-lister-wrapper">
+			<div ref={wrapperRef} className="emoji-popup-lister-wrapper">
 
 				{input ? (
 					<InputField
@@ -180,6 +193,7 @@ const EmojiPopup = ({
 						onKeyDown={handleKeyDown}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
+						aria-label="Generic input with emoji support"
 						className="emoji-popup-lister-input"
 					/>
 				) : (
@@ -190,6 +204,7 @@ const EmojiPopup = ({
 						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
 						placeholder={placeholder}
+						aria-label={props.ariaLabel || "Generic input with emoji support"}
 						onFocus={handleFocus}
 						onBlur={handleBlur}
 						className="emoji-popup-lister-input"
@@ -197,7 +212,7 @@ const EmojiPopup = ({
 				)}
 				
 				{ active ? (
-					<div className="emoji-popup-lister-container">
+					<div className="emoji-popup-lister-container" aria-label="Emoji popup lister">
 						<div
 							ref={emojiListerRef}
 							className="emoji-popup-lister"
@@ -209,9 +224,10 @@ const EmojiPopup = ({
 							{ emojiList.length ? emojiList.map((emoji, i) => {
 								return (
 									<div
+										aria-label={`Emoji list item: ${emoji.description}`}
 										className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
-										onClick={() => {
-											list.select(emoji.emoji); 
+										onClick={(e) => {
+											handleItemClick(e, emoji.emoji);
 										}}
 										onMouseEnter={(e) => {
 											handleItemMouseEnter(e, i);
@@ -228,7 +244,7 @@ const EmojiPopup = ({
 								);
 							}) : <div className="emoji-popup-lister-item-null">{emojiSearchString.length ? "No matches found" : "type for emoji search..."}</div> }
 						</div>
-						<div className="emoji-popup-lister-how-to">
+						<div className="emoji-popup-lister-how-to" aria-label="Emoji popup search total, and how-to">
 							<div className="left">Total: <strong>{emojiList.length}</strong></div>
 							<div className="right">Navigate: <code>Up/Down</code>, Select: <code>Enter</code></div>
 						</div>

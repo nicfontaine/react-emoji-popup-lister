@@ -1,12 +1,24 @@
 html {
-	background: rgb(22, 22, 22);
+	background: rgb(26, 26, 26);
 	font-size: 17px;
 	color: #dcdcdc;
 	font-family: sans-serif;
+	text-align: center;
 }
-input {
+input, textarea {
 	font-size: 1rem;
+	background: #000;
+	border: none;
+	outline: none;
+	border-radius: 0.4rem;
+	color: #eee;
+	padding: 0.7rem;
+	border: 2px solid rgb(45, 45, 45);
 }
-.App {
-  text-align: center;
+input:focus, textarea:focus {
+	border: 2px solid rgb(81, 110, 71);
+	box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+}
+h1 {
+	margin-top: 1.5rem;
 }

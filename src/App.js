@@ -16,9 +16,11 @@ const Input = function (props) {
 				// Override default values
 				// NOTE: Do Not override these props: value, onKeyDown, onKeyUp, onChange
 				// className="test-default-class"
-				placeholder="Some Text"
+				placeholder="Use &quot;:&quot; to type an emoji"
 				// Use and extend styling
-				style={{ ...props.style, padding: "0.5rem" }}
+				style={{ ...props.style, padding: "0.7rem", minHeight: "120px" }}
+				aria-label="Profile description"
+				autoFocus={true}
 			// ...
 			></textarea>
 		</>
@@ -43,8 +45,7 @@ const App = function () {
 
 		<div className="App">
 
-			<h2>React Emoji Popup Lister</h2>
-			<p>Type an emoji string input the input below<br></br>(&quot;:a&quot; or similar)</p>
+			<h1>React Emoji Popup Lister</h1>
 
 			{/* Container to align input and popup together */}
 			<div style={{ maxWidth: "400px", margin: "1rem auto 0" }}>
@@ -58,6 +59,7 @@ const App = function () {
 					// maxHeight="200px"
 					// maxWidth="200px"
 					placeholder="Placeholder text"
+					ariaLabel="Aria label text"
 					onChange={handleChange}
 					onClick={handleClick}
 					onKeyDown={handleKeyDown}
