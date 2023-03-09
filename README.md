@@ -1,8 +1,11 @@
 # React Emoji Popup Lister
 > Slack-lick emoji list and select via keyboard
 
+![Screenshot](http://https://github.com/nicfontaine/react-emoji-popup-lister/tree/main/img/screenshot-01.png)
+
 ## About
-Type and insert emojis within your inputs, via their shortcode values (`:cool:`)
+Type and insert emojis within your inputs, via their shortcode values.   
+`:cool:` :cool:
 
 ## Install
 `npm i -s react-emoji-popup-lister`

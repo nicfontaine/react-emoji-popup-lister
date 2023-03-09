@@ -18,7 +18,7 @@ const Input = function (props) {
 				// className="test-default-class"
 				placeholder="Use &quot;:&quot; to type an emoji"
 				// Use and extend styling
-				style={{ ...props.style, padding: "0.7rem", minHeight: "120px" }}
+				style={{ ...props.style, padding: "0.7rem", minHeight: "80px" }}
 				aria-label="Profile description"
 				autoFocus={true}
 			// ...
@@ -56,7 +56,7 @@ const App = function () {
 					// Additional (optional)
 					input={Input}
 					listMax="40"
-					maxHeight="200px"
+					maxHeight="170px"
 					maxWidth="350px"
 					placeholder="Placeholder text"
 					theme="auto"
