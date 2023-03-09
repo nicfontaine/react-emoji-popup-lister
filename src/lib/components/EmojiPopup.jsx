@@ -4,6 +4,8 @@ import { gemoji } from "gemoji";
 import FuzzySearch from "fuzzy-search";
 import emojiSubstring from "../util/emoji-substring";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
+
+const themeDefault = "dark";
 var elIndex = 0;
 var selStart;
 
@@ -15,18 +17,29 @@ const EmojiPopup = ({
 	maxWidth = "400px",
 	maxHeight = "250px",
 	placeholder,
+	theme = themeDefault,
 	...props
 }) => {
 
 	const InputField = input;
+	const [themeMode, setThemeMode] = useState(theme);
+
 	const [active, setActive] = useState(false);
 	const [inputText, setInputText] = useState("");
 	const [emojiList, setEmojiList] = useState([]);
 	const [emojiSearchString, setEmojiSearchString] = useState("");
 	const [emojiSelect, setEmojiSelect] = useState("");
 	const [mouseNav, setMouseNav] = useState(false);
-	const emojiListerRef = useRef(null);
 	const wrapperRef = useRef(null);
+	const emojiListerRef = useRef(null);
+
+	// Theme
+	useEffect(() => {
+		// setTheme(userTheme);
+		wrapperRef.current.classList.remove("theme-light");
+		wrapperRef.current.classList.remove("theme-dark");
+		wrapperRef.current.classList.add(`theme-${theme}`);
+	}, [theme]);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse
@@ -60,7 +73,7 @@ const EmojiPopup = ({
 			const delta = inp.selectionStart - inputText.indexOf(emojiSearchString);
 			selStart = inp.selectionStart - delta + emojiSelect.length;
 			setInputText(inputText.replace(`${emojiSearchString}`, emojiSelect));
-			console.log([...emojiSelect]);
+			// console.log([...emojiSelect]);
 			setActive(false);
 			setEmojiSearchString("");
 			setEmojiSelect("");
@@ -75,6 +88,10 @@ const EmojiPopup = ({
 		},
 		prev () {
 			elIndex = elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1;
+			list.update();
+		},
+		index (i) {
+			elIndex = i;
 			list.update();
 		},
 		select (override) {
@@ -109,7 +126,7 @@ const EmojiPopup = ({
 		setMouseNav(false);
 		if (!active) return;
 		
-		const prevent = ["Enter", "ArrowDown", "ArrowUp", "Tab"];
+		const prevent = ["Enter", "ArrowDown", "ArrowUp", "Tab", "Home", "End"];
 		if (prevent.indexOf(e.key) > -1) e.preventDefault();
 
 		if (e.key === "ArrowUp") {
@@ -118,6 +135,10 @@ const EmojiPopup = ({
 			list.next();
 		} else if (e.key === "Enter" || e.key === "Tab") {
 			list.select();
+		} else if (e.key === "Home") {
+			list.index(0);
+		} else if (e.key === "End") {
+			list.index(emojiList.length - 1);
 		} else if (e.key === "Escape") {
 			// NOTE: This is overridden by keyup check. So would need to set a bypass, and determine a reset case
 			// setActive(false)

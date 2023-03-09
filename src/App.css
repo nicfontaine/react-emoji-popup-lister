@@ -5,6 +5,9 @@ html {
 	font-family: sans-serif;
 	text-align: center;
 }
+a {
+	color: rgb(50, 161, 178);
+}
 input, textarea {
 	font-size: 1rem;
 	background: #000;

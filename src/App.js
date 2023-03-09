@@ -45,7 +45,7 @@ const App = function () {
 
 		<div className="App">
 
-			<h1>React Emoji Popup Lister</h1>
+			<h1> React Emoji Popup Lister</h1>
 
 			{/* Container to align input and popup together */}
 			<div style={{ maxWidth: "400px", margin: "1rem auto 0" }}>
@@ -59,6 +59,7 @@ const App = function () {
 					// maxHeight="200px"
 					// maxWidth="200px"
 					placeholder="Placeholder text"
+					// theme="light"
 					ariaLabel="Aria label text"
 					onChange={handleChange}
 					onClick={handleClick}
@@ -66,6 +67,10 @@ const App = function () {
 					onKeyUp={handleKeyUp}
 				/>
 			</div>
+
+			<h2>⌨️ 🥰</h2>
+
+			<p><a href="https://github.com/nicfontaine/react-emoji-popup-lister" target="_blank" rel="noreferrer">Github</a></p>
 
 		</div>
 		

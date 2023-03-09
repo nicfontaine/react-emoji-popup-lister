@@ -78,6 +78,7 @@ export default function ExampleB () {
 | `inputText` | useState `string` value | `""` | Store state in your parent component |
 | `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
 | `listMax` | `number` | `6` | Max number of emoji matches to display |
+| `theme` | `light`, `dark`  | `dark` | Max number of emoji matches to display |
 | `maxWidth` | `number` | `400px` | Scroll container width cap |
 | `maxHeight` | `number` | `250px` | Scroll container height cap |
 | `placeholder` | `string` | `""` | Input placeholder value |
@@ -104,9 +105,9 @@ Input contains the className `emoji-popup-lister-input`. This can also be overri
 Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
 
 ## Todo
-- Dark / light mode theming options
 - Support type-search immediately after an existing emoji character
 - Option to replace full emoji string automatically (2 colons)
+- Deleting "combo" emojis on Firefox doesn't remove the entire emoji
 
 ## License
 MIT © [nicfontaine](https://github.com/nicfontaine)
