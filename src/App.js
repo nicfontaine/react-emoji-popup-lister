@@ -37,6 +37,7 @@ const App = function () {
 	const handleKeyUp = (e) => { /* Keyup from parent */ };
 	const handleChange = (e) => { /* Change from parent */ };
 	const handleClick = (e) => { /* Click from parent */ };
+	// ...
 
 	return (
 

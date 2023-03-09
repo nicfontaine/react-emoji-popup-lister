@@ -23,11 +23,13 @@ const EmojiPopup = ({
 	const [emojiList, setEmojiList] = useState([]);
 	const [emojiSearchString, setEmojiSearchString] = useState("");
 	const [emojiSelect, setEmojiSelect] = useState("");
+	const [mouseNav, setMouseNav] = useState(false);
 	const emojiListerRef = useRef(null);
 
 	// Keep emoji row item selection in view
+	// Disable functionality if user is navigating with mouse
 	useEffect(() => {
-		if (emojiListerRef?.current) {
+		if (!mouseNav && emojiListerRef?.current) {
 			const liActive = emojiListerRef.current.getElementsByClassName("active")[0];
 			if (liActive) {
 				liActive.scrollIntoView({ behavior: "auto", block: "center" });
@@ -65,8 +67,10 @@ const EmojiPopup = ({
 			elIndex = elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1;
 			list.update();
 		},
-		select () {
-			if (emojiList.length && emojiList[elIndex]) {
+		select (override) {
+			if (override) {
+				setEmojiSelect(override);
+			} else if (emojiList.length && emojiList[elIndex]) {
 				setEmojiSelect(emojiList[elIndex].emoji);
 			}
 		},
@@ -92,6 +96,7 @@ const EmojiPopup = ({
 	const handleKeyDown = function (e) {
 		// User-passed event
 		props.onKeyDown?.(e);
+		setMouseNav(false);
 		if (!active) return;
 		
 		const prevent = ["Enter", "ArrowDown", "ArrowUp", "Tab"];
@@ -115,6 +120,7 @@ const EmojiPopup = ({
 	const handleKeyUp = function (e) {
 		// User-passed event
 		props.onKeyUp?.(e);
+		setMouseNav(false);
 		const start = e.target.selectionStart - 1;
 		var _active = active;
 		// Possible state change cases
@@ -138,9 +144,25 @@ const EmojiPopup = ({
 		setInputText(e.target.value);
 	};
 
+	// List item events
+	const handleItemMouseEnter = function (e, i) {
+		setMouseNav(true);
+		elIndex = i;
+		list.update();
+	};
+	const handleItemMouseLeave = function (e) {
+		setMouseNav(false);
+	};
+
 	// User-passed event only
 	const handleClick = function (e) {
 		props.onClick?.(e);
+	};
+	const handleFocus = function (e) {
+		props.onFocus?.(e);
+	};
+	const handleBlur = function (e) {
+		props.onBlur?.(e);
 	};
 
 	return (
@@ -156,6 +178,8 @@ const EmojiPopup = ({
 						onChange={handleChange}
 						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
+						onFocus={handleFocus}
+						onBlur={handleBlur}
 						className="emoji-popup-lister-input"
 					/>
 				) : (
@@ -166,6 +190,8 @@ const EmojiPopup = ({
 						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
 						placeholder={placeholder}
+						onFocus={handleFocus}
+						onBlur={handleBlur}
 						className="emoji-popup-lister-input"
 					></input>
 				)}
@@ -180,9 +206,20 @@ const EmojiPopup = ({
 								maxWidth: maxWidth,
 							}}
 						>
-							{ emojiList.length ? emojiList.map((emoji) => {
+							{ emojiList.length ? emojiList.map((emoji, i) => {
 								return (
-									<div className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}>
+									<div
+										className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
+										onClick={() => {
+											list.select(emoji.emoji); 
+										}}
+										onMouseEnter={(e) => {
+											handleItemMouseEnter(e, i);
+										}}
+										onMouseLeave={() => {
+											handleItemMouseLeave();
+										}}
+									>
 										<div className="inner">
 											<div className="emoji">{emoji.emoji}</div>
 											<code className="code">:{emoji.names.join(",")}</code>
@@ -191,7 +228,10 @@ const EmojiPopup = ({
 								);
 							}) : <div className="emoji-popup-lister-item-null">{emojiSearchString.length ? "No matches found" : "type for emoji search..."}</div> }
 						</div>
-						<div className="emoji-popup-lister-how-to">Navigate: <code>Up/Down</code>, Select: <code>Enter</code></div>
+						<div className="emoji-popup-lister-how-to">
+							<div className="left">Total: <strong>{emojiList.length}</strong></div>
+							<div className="right">Navigate: <code>Up/Down</code>, Select: <code>Enter</code></div>
+						</div>
 					</div>
 				) : null}
 				

@@ -39,7 +39,7 @@ function Input (props) {
 			placeholder="Your placeholder text"
 			// Use and extend styling inline
 			style={{ ...props.style, padding: "0.5rem" }}
-			//...
+			// ...
 		></input>
 	);
 }
@@ -61,7 +61,7 @@ export default function ExampleB () {
 				setInputText={setInputText}
 				// Add your event handlers
 				onChange={handleChange}
-				//...
+				// ...
 			/>
 		</div>
 	);
@@ -83,14 +83,16 @@ export default function ExampleB () {
 | `placeholder` | `string` | `""` | Input placeholder value |
 
 ## Prop Events
-> Place on `<EmojiPopup>` component, **Not** your custom `input` prop as this will override necessary events
+> Place on `<EmojiPopup>` component, **Not** your custom `<input>` - as this will override necessary events
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `onClick` | `function` | - | Input element click event (* Not emoji list) |
-| `onChange` | `function` | - | Input value change event |
-| `onKeyUp` | `function` | - | Input keyUp event |
-| `onKeyDown` | `function` | - | Input keyDown event |
+| `onClick` | `function` | - | Input element Click event (* Not emoji list) |
+| `onChange` | `function` | - | Input value Change event |
+| `onKeyDown` | `function` | - | Input KeyDown event |
+| `onKeyUp` | `function` | - | Input KeyUp event |
+| `onFocus` | `function` | - | Input Focus event |
+| `onBlur` | `function` | - | Input Blur event |
 
 ## Styling
 

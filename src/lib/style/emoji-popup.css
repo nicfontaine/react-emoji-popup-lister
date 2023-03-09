@@ -26,6 +26,9 @@
   flex-direction: column;
 	overflow-y: scroll;
 }
+.emoji-popup-lister-item {
+	cursor: pointer;
+}
 .emoji-popup-lister-item,
 .emoji-popup-lister-item-null {
   padding: 0.35rem 0.5rem;
@@ -67,8 +70,15 @@
   padding: 0.6rem 0.5rem;
   font-size: 0.75rem;
   color: rgba(255,255,255,0.7);
-  font-style: italic;
+	display: flex;
+	justify-content: space-between;
   /* background: rgba(255,255,255,0.18); */
+}
+.emoji-popup-lister-how-to .left {
+	margin-right: 0.5rem;
+}
+.emoji-popup-lister-how-to .right {
+	font-style: italic;
 }
 .emoji-popup-lister-how-to code {
   padding: 0.1rem 0.3rem;
