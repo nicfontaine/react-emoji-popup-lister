@@ -5,7 +5,7 @@ import FuzzySearch from "fuzzy-search";
 import emojiSubstring from "../util/emoji-substring";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 
-const themeDefault = "light";
+const themeDefault = "auto";
 var elIndex = 0;
 var selStart;
 
@@ -31,6 +31,7 @@ const EmojiPopup = ({
 	const [emojiSelect, setEmojiSelect] = useState("");
 	const [mouseNav, setMouseNav] = useState(false);
 	const wrapperRef = useRef(null);
+	const emojiContainerRef = useRef(null);
 	const emojiListerRef = useRef(null);
 
 	useEffect(() => {
@@ -44,6 +45,16 @@ const EmojiPopup = ({
 			};
 		}
 	}, []);
+
+	// Reset index, and add display transition class
+	useEffect(() => {
+		if (active) {
+			emojiContainerRef.current.classList.add("active");
+		} else {
+			elIndex = 0;
+			emojiContainerRef.current.classList.remove("active");
+		}
+	}, [active]);
 
 	// Theme change
 	useEffect(() => {
@@ -153,8 +164,8 @@ const EmojiPopup = ({
 		} else if (e.key === "End") {
 			list.index(emojiList.length - 1);
 		} else if (e.key === "Escape") {
-			// NOTE: This is overridden by keyup check. So would need to set a bypass, and determine a reset case
-			// setActive(false)
+			setEmojiSearchString("");
+			setActive(false);
 		}
 	};
 
@@ -165,6 +176,11 @@ const EmojiPopup = ({
 		setMouseNav(false);
 		const start = e.target.selectionStart - 1;
 		var _active = active;
+		if (e.key === "Escape") {
+			setEmojiSearchString("");
+			setActive(false);
+			return;
+		}
 		// Possible state change cases
 		if (e.key === ":") {
 			_active = true;
@@ -245,8 +261,12 @@ const EmojiPopup = ({
 					></input>
 				)}
 				
-				{ active ? (
-					<div className="emoji-popup-lister-container" aria-label="Emoji popup lister">
+				<div
+					className="emoji-popup-lister-container"
+					aria-label={`${active} ? "Emoji popup lister" : ""`}
+					ref={emojiContainerRef}
+				>
+					<>
 						<div
 							ref={emojiListerRef}
 							className="emoji-popup-lister"
@@ -255,35 +275,40 @@ const EmojiPopup = ({
 								maxWidth: maxWidth,
 							}}
 						>
-							{ emojiList.length ? emojiList.map((emoji, i) => {
-								return (
-									<div
-										aria-label={`Emoji list item: ${emoji.description}`}
-										className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
-										onClick={(e) => {
-											handleItemClick(e, emoji.emoji);
-										}}
-										onMouseEnter={(e) => {
-											handleItemMouseEnter(e, i);
-										}}
-										onMouseLeave={() => {
-											handleItemMouseLeave();
-										}}
-									>
-										<div className="inner">
-											<div className="emoji">{emoji.emoji}</div>
-											<code className="code">:{emoji.names.join(",")}</code>
-										</div>
-									</div>
-								);
-							}) : <div className="emoji-popup-lister-item-null">{emojiSearchString.length ? "No matches found" : "type for emoji search..."}</div> }
+							{active ? (
+								<>
+									{ emojiList.length ? emojiList.map((emoji, i) => {
+										return (
+											<div
+												aria-label={`Emoji list item: ${emoji.description}`}
+												className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
+												onClick={(e) => {
+													handleItemClick(e, emoji.emoji);
+												}}
+												onMouseEnter={(e) => {
+													handleItemMouseEnter(e, i);
+												}}
+												onMouseLeave={() => {
+													handleItemMouseLeave();
+												}}
+											>
+												<div className="inner">
+													<div className="emoji">{emoji.emoji}</div>
+													<code className="code">:{emoji.names.join(",")}</code>
+												</div>
+											</div>
+										);
+									}) : <div className="emoji-popup-lister-item-null">{emojiSearchString.length ? "No matches found" : "type for emoji search..."}</div> }
+								</>
+							) : null}
 						</div>
 						<div className="emoji-popup-lister-how-to" aria-label="Emoji popup search total, and how-to">
 							<div className="left">Total: <strong>{emojiList.length}</strong></div>
-							<div className="right">Navigate: <code>Up/Down</code>, Select: <code>Enter</code></div>
+							<div className="middle">🔼 🔽</div>
+							<div className="right">⏎</div>
 						</div>
-					</div>
-				) : null}
+					</>
+				</div>
 
 				{ props.children ? { ...props.children } : null }
 				

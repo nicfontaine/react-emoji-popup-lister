@@ -5,7 +5,7 @@
 Type and insert emojis within your inputs, via their shortcode values (`:cool:`)
 
 ## Install
-`npm i -s emoji-popup-lister`
+`npm i -s react-emoji-popup-lister`
 
 ## Usage
 
@@ -92,7 +92,7 @@ export default function ExampleC () {
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `input` | HTML input or textarea | `<input>` | Pass your own input element or component |
+| `input` | input/textarea component | `<input>` | Pass your own input element or component |
 | `inputText` | useState `string` value | `""` | Store state in your parent component |
 | `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
 | `listMax` | `number` | `6` | Max number of emoji matches to display |
@@ -114,6 +114,16 @@ export default function ExampleC () {
 | `onFocus` | `function` | - | Input Focus event |
 | `onBlur` | `function` | - | Input Blur event |
 
+## Shortcuts
+> These will `preventDefault` in the input while the popup is active
+| Key | Function |
+| --- | --- |
+| `ArrowUp` | Up in emoji list |
+| `ArrowDown` | Down in emoji list |
+| `Home` | Start of emoji list |
+| `End` | End of emoji list |
+| `Enter` or `Tab` | Choose highlighted emoji |
+
 ## Styling
 
 #### Input
@@ -123,9 +133,11 @@ Input contains the className `emoji-popup-lister-input`. This can also be overri
 Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
 
 ## Todo
-- Support type-search immediately after an existing emoji character
-- Option to replace full emoji string automatically (2 colons)
-- Deleting "combo" emojis on Firefox doesn't remove the entire emoji
+- (Bug) Support type-search immediately after an existing emoji character
+- (Feature) Option to replace full emoji string automatically (2 colons)
+- (Bug) Deleting "combo" emojis on Firefox doesn't remove the entire emoji
+- (Bug) Escape to hide gets reset on successive typing
+- (Feature) Add better positioning support
 
 ## License
 MIT © [nicfontaine](https://github.com/nicfontaine)

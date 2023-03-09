@@ -19,9 +19,15 @@
   position: absolute;
   z-index: 20;
   bottom: -7px;
-  transform: translateY(100%);
   border-radius: 8px;
   overflow: hidden;
+	transition: all 0.1s;
+	opacity: 0;
+  transform: translateY(96%);
+}
+.emoji-popup-lister-container.active {
+	opacity: 1;
+	transform: translateY(100%);
 }
 .theme-dark .emoji-popup-lister-container {
 	background: rgba(0,0,0,0.9);
@@ -37,6 +43,8 @@
   display: flex;
   flex-direction: column;
 	overflow-y: scroll;
+	min-width: 200px;
+	min-height: 60px;
 }
 .emoji-popup-lister-item {
 	cursor: pointer;
@@ -48,12 +56,15 @@
   display: flex;
   font-size: 0.9rem;
 }
-.theme-dark .emoji-popup-lister-item,
-.theme-dark .emoji-popup-lister-item-null {
+.emoji-popup-lister-item-null {
+	text-align: center;
+	justify-content: center;
+	padding-top: 0.6rem;
+}
+.theme-dark .emoji-popup-lister-item {
 	border-bottom: 1px solid rgba(38, 38, 38, 0.9);
 }
-.theme-light .emoji-popup-lister-item,
-.theme-light .emoji-popup-lister-item-null {
+.theme-light .emoji-popup-lister-item {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.13);
 }
 .emoji-popup-lister-item.active {
@@ -118,7 +129,8 @@
   padding: 0.6rem 0.5rem;
   font-size: 0.75rem;
 	display: flex;
-	justify-content: space-between;
+	flex-wrap: wrap;
+	/* justify-content: space-between; */
 	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 	z-index: 10;
 	position: relative;
@@ -135,7 +147,11 @@
 .emoji-popup-lister-how-to .left {
 	margin-right: 0.5rem;
 }
+.emoji-popup-lister-how-to .middle {
+	margin-left: auto;
+}
 .emoji-popup-lister-how-to .right {
+	margin-left: 0.5rem;
 	font-style: italic;
 }
 .emoji-popup-lister-how-to code {

@@ -56,8 +56,8 @@ const App = function () {
 					// Additional (optional)
 					input={Input}
 					listMax="40"
-					// maxHeight="200px"
-					// maxWidth="200px"
+					maxHeight="200px"
+					maxWidth="350px"
 					placeholder="Placeholder text"
 					theme="auto"
 					ariaLabel="Aria label text"
@@ -66,7 +66,7 @@ const App = function () {
 					onKeyDown={handleKeyDown}
 					onKeyUp={handleKeyUp}
 				>
-					<div className="">I am a child</div>
+					{/* <div className="">I am a child</div> */}
 				</EmojiPopup>
 			</div>
 
