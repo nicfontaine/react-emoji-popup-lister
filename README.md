@@ -116,6 +116,7 @@ export default function ExampleC () {
 
 ## Shortcuts
 > These will `preventDefault` in the input while the popup is active
+
 | Key | Function |
 | --- | --- |
 | `ArrowUp` | Up in emoji list |
