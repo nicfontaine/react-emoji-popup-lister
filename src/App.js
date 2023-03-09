@@ -65,7 +65,9 @@ const App = function () {
 					onClick={handleClick}
 					onKeyDown={handleKeyDown}
 					onKeyUp={handleKeyUp}
-				/>
+				>
+					<div className="">I am a child</div>
+				</EmojiPopup>
 			</div>
 
 			<h2>⌨️ 🥰</h2>

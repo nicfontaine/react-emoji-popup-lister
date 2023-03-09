@@ -29,8 +29,8 @@ export default function ExampleB () {
       maxHeight="200px"
       maxWidth="300px"
       placeholder="Your placeholder text"
-			theme="light"
-			// ...
+      theme="light"
+      // ...
     />
   );
 }
@@ -45,8 +45,8 @@ import EmojiPopup from "emoji-popup-lister"
 
 function Input (props) {
 
-	// State update in child component
-	useEffect(() => { /** **/ }, [props.value]);
+  // State update in child component
+  useEffect(() => { /** **/ }, [props.value]);
 
   return (
     <input
@@ -66,8 +66,8 @@ export default function ExampleC () {
   // Input state
   const [inputText, setInputText] = useState("");
 
-	// State update in parent component
-	useEffect(() => { /** **/ }, [inputText]);
+  // State update in parent component
+  useEffect(() => { /** **/ }, [inputText]);
 
   // Example event
   const handleChange = function (e) { /** **/ };
@@ -84,7 +84,9 @@ export default function ExampleC () {
         // Add your event handlers
         onChange={handleChange}
         // ...
-      />
+      >
+        <div>Child content...</div>
+      </EmojiPopup>
     </div>
   );
 }

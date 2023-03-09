@@ -284,6 +284,8 @@ const EmojiPopup = ({
 						</div>
 					</div>
 				) : null}
+
+				{ props.children ? { ...props.children } : null }
 				
 			</div>
 
