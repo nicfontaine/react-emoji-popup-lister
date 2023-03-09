@@ -8,15 +8,18 @@ Type and insert emojis within your inputs, via their shortcode values (`:cool:`)
 `npm i -s emoji-popup-lister`
 
 ## Usage
+
+### 1. Basic
 ```javascript
 import EmojiPopup from "emoji-popup-lister"
 
-// 1. Basic
 export default function ExampleA () {
   return <EmojiPopup />
 }
+```
 
-// 2. Custom styling with props
+### 2. Custom styling with props
+```javascript
 export default function ExampleB () {
   return (
     <EmojiPopup
@@ -27,8 +30,12 @@ export default function ExampleB () {
     />
   );
 }
+```
 
-// 3. Provide an input component, state, and events from your parent component
+### 3. Provide an input component, state, and events from your parent component
+Also wrap in a container div, to align the input and popup   
+
+```javascript
 function Input (props) {
   return (
     <input
@@ -66,7 +73,6 @@ export default function ExampleC () {
     </div>
   );
 }
-
 ```
 
 ## Prop Options
