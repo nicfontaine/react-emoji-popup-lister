@@ -16,7 +16,7 @@ export default function ExampleA () {
 	return <EmojiPopup />
 }
 
-// 2. Custom styled
+// 2. Custom styling with props
 export default function ExampleB () {
 	return (
 		<EmojiPopup
@@ -28,7 +28,7 @@ export default function ExampleB () {
 	);
 }
 
-// 3. Provide an input, state, and events from your parent component
+// 3. Provide an input component, state, and events from your parent component
 function Input (props) {
 	return (
 		<input
@@ -44,7 +44,9 @@ function Input (props) {
 	);
 }
 export default function ExampleB () {
+	// Input state
 	const [inputText, setInputText] = useState("");
+	// Example event
 	const handleChange = function (e) {
 		console.log(e);
 	};
@@ -54,11 +56,12 @@ export default function ExampleB () {
 			<EmojiPopup
 				// Use your input component
 				input={Input}
-				// Use state in parent component
+				// Pass state from the parent component
 				inputText={inputText}
 				setInputText={setInputText}
 				// Add your event handlers
 				onChange={handleChange}
+				//...
 			/>
 		</div>
 	);
@@ -68,6 +71,7 @@ export default function ExampleB () {
 
 ## Prop Options
 > All are optional
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `input` | HTML input or textarea | `<input>` | Pass your own input element or component |
@@ -80,6 +84,7 @@ export default function ExampleB () {
 
 ## Prop Events
 > Place on `<EmojiPopup>` component, **Not** your custom `input` prop as this will override necessary events
+
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `onClick` | `function` | - | Input element click event (* Not emoji list) |
@@ -94,13 +99,6 @@ Input contains the className `emoji-popup-lister-input`. This can also be overri
 
 #### Popup
 Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
-
-## Development
-Run a basic example react page from `example/`
-- `cd example`
-- `npm i`
-- `npm start`
-NOTE: Package source code should already be symlinked from `/src/` to `/example/src/src/`
 
 ## License
 MIT © [nicfontaine](https://github.com/nicfontaine)
