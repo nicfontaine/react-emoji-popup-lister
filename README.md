@@ -20,6 +20,8 @@ export default function ExampleA () {
 
 ### 2. Custom styling with props
 ```javascript
+import EmojiPopup from "emoji-popup-lister"
+
 export default function ExampleB () {
   return (
     <EmojiPopup
@@ -27,6 +29,8 @@ export default function ExampleB () {
       maxHeight="200px"
       maxWidth="300px"
       placeholder="Your placeholder text"
+			theme="light"
+			// ...
     />
   );
 }
@@ -36,7 +40,14 @@ export default function ExampleB () {
 Also wrap in a container div, to align the input and popup   
 
 ```javascript
+import { useState, useEffect } from "react";
+import EmojiPopup from "emoji-popup-lister"
+
 function Input (props) {
+
+	// State update in child component
+	useEffect(() => { /** **/ }, [props.value]);
+
   return (
     <input
       // Required. Anything after is optional, and will override values
@@ -51,12 +62,16 @@ function Input (props) {
   );
 }
 export default function ExampleC () {
+
   // Input state
   const [inputText, setInputText] = useState("");
+
+	// State update in parent component
+	useEffect(() => { /** **/ }, [inputText]);
+
   // Example event
-  const handleChange = function (e) {
-    console.log(e);
-  };
+  const handleChange = function (e) { /** **/ };
+
   return (
     {/* Container to align input and popup together */}
     <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
