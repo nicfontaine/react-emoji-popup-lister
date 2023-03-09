@@ -44,10 +44,8 @@ import { useState, useEffect } from "react";
 import EmojiPopup from "emoji-popup-lister"
 
 function Input (props) {
-
   // State update in child component
-  useEffect(() => { /** **/ }, [props.value]);
-
+  useEffect(() => { }, [props.value]);
   return (
     <input
       // Required. Anything after is optional, and will override values
@@ -61,17 +59,14 @@ function Input (props) {
     ></input>
   );
 }
-export default function ExampleC () {
 
+export default function ExampleC () {
   // Input state
   const [inputText, setInputText] = useState("");
-
   // State update in parent component
-  useEffect(() => { /** **/ }, [inputText]);
-
+  useEffect(() => { }, [inputText]);
   // Example event
-  const handleChange = function (e) { /** **/ };
-
+  const handleChange = function (e) { };
   return (
     {/* Container to align input and popup together */}
     <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
