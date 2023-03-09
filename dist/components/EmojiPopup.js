@@ -1,5 +1,6 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -11,12 +12,15 @@ require("core-js/modules/esnext.string.replace-all.js");
 require("core-js/modules/es.string.search.js");
 require("core-js/modules/es.symbol.description.js");
 require("./../style/emoji-popup.css");
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 var _gemoji = require("gemoji");
 var _fuzzySearch = _interopRequireDefault(require("fuzzy-search"));
 var _emojiSubstring = _interopRequireDefault(require("../util/emoji-substring"));
+var _jsxRuntime = require("react/jsx-runtime");
 const _excluded = ["input", "inputText", "setInputText", "listMax", "maxWidth", "maxHeight", "placeholder", "theme"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -253,74 +257,93 @@ const EmojiPopup = _ref => {
     var _props$onBlur;
     (_props$onBlur = props.onBlur) === null || _props$onBlur === void 0 ? void 0 : _props$onBlur.call(props, e);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    ref: wrapperRef,
-    className: "emoji-popup-lister-wrapper"
-  }, input ? /*#__PURE__*/React.createElement(InputField, {
-    value: inputText,
-    onClick: handleClick,
-    onChange: handleChange,
-    onKeyUp: handleKeyUp,
-    onKeyDown: handleKeyDown,
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    "aria-label": "Generic input with emoji support",
-    className: "emoji-popup-lister-input"
-  }) : /*#__PURE__*/React.createElement("input", {
-    value: inputText,
-    onClick: handleClick,
-    onChange: handleChange,
-    onKeyUp: handleKeyUp,
-    onKeyDown: handleKeyDown,
-    placeholder: placeholder,
-    "aria-label": props.ariaLabel || "Generic input with emoji support",
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    className: "emoji-popup-lister-input"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "emoji-popup-lister-container",
-    "aria-label": active ? "Emoji lister popup" : "",
-    ref: emojiContainerRef
-  }, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    ref: emojiListerRef,
-    className: "emoji-popup-lister",
-    style: {
-      maxHeight: maxHeight,
-      maxWidth: maxWidth
-    }
-  }, active ? /*#__PURE__*/React.createElement(React.Fragment, null, emojiList.length ? emojiList.map((emoji, i) => {
-    return /*#__PURE__*/React.createElement("div", {
-      "aria-label": "Emoji list item: ".concat(emoji.description),
-      className: "emoji-popup-lister-item ".concat(emoji.active ? "active" : ""),
-      key: emoji.emoji,
-      onClick: e => {
-        handleItemClick(e, emoji.emoji);
-      },
-      onMouseEnter: e => {
-        handleItemMouseEnter(e, i);
-      },
-      onMouseLeave: () => {
-        handleItemMouseLeave();
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "inner"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "emoji"
-    }, emoji.emoji), /*#__PURE__*/React.createElement("code", {
-      className: "code"
-    }, ":", emoji.names.join(","))));
-  }) : /*#__PURE__*/React.createElement("div", {
-    className: "emoji-popup-lister-item-null"
-  }, emojiSearchString.length ? "No matches found" : "type for emoji search...")) : null), /*#__PURE__*/React.createElement("div", {
-    className: "emoji-popup-lister-how-to",
-    "aria-label": "Emoji popup search total, and how-to"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "left"
-  }, "Total: ", /*#__PURE__*/React.createElement("strong", null, emojiList.length)), /*#__PURE__*/React.createElement("div", {
-    className: "middle"
-  }, "\uD83D\uDD3C \uD83D\uDD3D"), /*#__PURE__*/React.createElement("div", {
-    className: "right"
-  }, "\u23CE")))), props.children ? _objectSpread({}, props.children) : null));
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
+    children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+      ref: wrapperRef,
+      className: "emoji-popup-lister-wrapper",
+      children: [input ? /*#__PURE__*/(0, _jsxRuntime.jsx)(InputField, {
+        value: inputText,
+        onClick: handleClick,
+        onChange: handleChange,
+        onKeyUp: handleKeyUp,
+        onKeyDown: handleKeyDown,
+        onFocus: handleFocus,
+        onBlur: handleBlur,
+        "aria-label": "Generic input with emoji support",
+        className: "emoji-popup-lister-input"
+      }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("input", {
+        value: inputText,
+        onClick: handleClick,
+        onChange: handleChange,
+        onKeyUp: handleKeyUp,
+        onKeyDown: handleKeyDown,
+        placeholder: placeholder,
+        "aria-label": props.ariaLabel || "Generic input with emoji support",
+        onFocus: handleFocus,
+        onBlur: handleBlur,
+        className: "emoji-popup-lister-input"
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+        className: "emoji-popup-lister-container",
+        "aria-label": active ? "Emoji lister popup" : "",
+        ref: emojiContainerRef,
+        children: /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+          children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+            ref: emojiListerRef,
+            className: "emoji-popup-lister",
+            style: {
+              maxHeight: maxHeight,
+              maxWidth: maxWidth
+            },
+            children: active ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
+              children: emojiList.length ? emojiList.map((emoji, i) => {
+                return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+                  "aria-label": "Emoji list item: ".concat(emoji.description),
+                  className: "emoji-popup-lister-item ".concat(emoji.active ? "active" : ""),
+                  onClick: e => {
+                    handleItemClick(e, emoji.emoji);
+                  },
+                  onMouseEnter: e => {
+                    handleItemMouseEnter(e, i);
+                  },
+                  onMouseLeave: () => {
+                    handleItemMouseLeave();
+                  },
+                  children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+                    className: "inner",
+                    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+                      className: "emoji",
+                      children: emoji.emoji
+                    }), /*#__PURE__*/(0, _jsxRuntime.jsxs)("code", {
+                      className: "code",
+                      children: [":", emoji.names.join(",")]
+                    })]
+                  })
+                }, emoji.emoji);
+              }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+                className: "emoji-popup-lister-item-null",
+                children: emojiSearchString.length ? "No matches found" : "type for emoji search..."
+              })
+            }) : null
+          }), /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+            className: "emoji-popup-lister-how-to",
+            "aria-label": "Emoji popup search total, and how-to",
+            children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+              className: "left",
+              children: ["Total: ", /*#__PURE__*/(0, _jsxRuntime.jsx)("strong", {
+                children: emojiList.length
+              })]
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+              className: "middle",
+              children: "\uD83D\uDD3C \uD83D\uDD3D"
+            }), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+              className: "right",
+              children: "\u23CE"
+            })]
+          })]
+        })
+      }), props.children ? _objectSpread({}, props.children) : null]
+    })
+  });
 };
 var _default = EmojiPopup;
 exports.default = _default;

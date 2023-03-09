@@ -1,4 +1,5 @@
 import "./../style/emoji-popup.css";
+import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { gemoji } from "gemoji";
 import FuzzySearch from "fuzzy-search";
