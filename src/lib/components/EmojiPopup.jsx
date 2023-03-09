@@ -5,7 +5,7 @@ import FuzzySearch from "fuzzy-search";
 import emojiSubstring from "../util/emoji-substring";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 
-const themeDefault = "dark";
+const themeDefault = "light";
 var elIndex = 0;
 var selStart;
 
@@ -33,13 +33,26 @@ const EmojiPopup = ({
 	const wrapperRef = useRef(null);
 	const emojiListerRef = useRef(null);
 
-	// Theme
 	useEffect(() => {
-		// setTheme(userTheme);
+		// Auto theme switch listener
+		if (theme === "auto") {
+			window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => setThemeMode(e.matches ? "dark" : "light"));
+			setThemeMode(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+			return () => {
+				window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", () => {
+				});
+			};
+		}
+	}, []);
+
+	// Theme change
+	useEffect(() => {
 		wrapperRef.current.classList.remove("theme-light");
 		wrapperRef.current.classList.remove("theme-dark");
-		wrapperRef.current.classList.add(`theme-${theme}`);
-	}, [theme]);
+		if (themeMode === "dark" || themeMode === "light") {
+			wrapperRef.current.classList.add(`theme-${themeMode}`);
+		}
+	}, [themeMode]);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse

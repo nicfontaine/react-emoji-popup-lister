@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
-import EmojiPopup from './lib/index';
+import EmojiPopup from "./lib/index";
 
 // Custom input (optional)
 const Input = function (props) {
@@ -59,7 +59,7 @@ const App = function () {
 					// maxHeight="200px"
 					// maxWidth="200px"
 					placeholder="Placeholder text"
-					// theme="light"
+					theme="auto"
 					ariaLabel="Aria label text"
 					onChange={handleChange}
 					onClick={handleClick}

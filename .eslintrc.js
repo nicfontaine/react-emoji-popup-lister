@@ -24,6 +24,7 @@ module.exports = {
 		strict: ["error", "global"],
 		"func-style": ["error", "expression"],
 		"react/react-in-jsx-scope": "off",
+		"quotes": [2, "double", { "avoidEscape": true }],
 		"arrow-parens": ["error", "always"],
 		"prefer-const": "error",
 		"no-unused-vars": "off",

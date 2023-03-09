@@ -78,7 +78,7 @@ export default function ExampleB () {
 | `inputText` | useState `string` value | `""` | Store state in your parent component |
 | `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
 | `listMax` | `number` | `6` | Max number of emoji matches to display |
-| `theme` | `light`, `dark`  | `dark` | Max number of emoji matches to display |
+| `theme` | `light` `dark` `auto`  | `dark` | Popup display theme style |
 | `maxWidth` | `number` | `400px` | Scroll container width cap |
 | `maxHeight` | `number` | `250px` | Scroll container height cap |
 | `placeholder` | `string` | `""` | Input placeholder value |
