@@ -13,58 +13,58 @@ import EmojiPopup from "emoji-popup-lister"
 
 // 1. Basic
 export default function ExampleA () {
-	return <EmojiPopup />
+  return <EmojiPopup />
 }
 
 // 2. Custom styling with props
 export default function ExampleB () {
-	return (
-		<EmojiPopup
-			listMax="40"
-			maxHeight="200px"
-			maxWidth="300px"
-			placeholder="Your placeholder text"
-		/>
-	);
+  return (
+    <EmojiPopup
+      listMax="40"
+      maxHeight="200px"
+      maxWidth="300px"
+      placeholder="Your placeholder text"
+    />
+  );
 }
 
 // 3. Provide an input component, state, and events from your parent component
 function Input (props) {
-	return (
-		<input
-			// Required. Anything after is optional, and will override values
-			{...props}
-			// Override existing input styles
-			className="your-class-name"
-			placeholder="Your placeholder text"
-			// Use and extend styling inline
-			style={{ ...props.style, padding: "0.5rem" }}
-			// ...
-		></input>
-	);
+  return (
+    <input
+      // Required. Anything after is optional, and will override values
+      {...props}
+      // Override existing input styles
+      className="your-class-name"
+      placeholder="Your placeholder text"
+      // Use and extend styling inline
+      style={{ ...props.style, padding: "0.5rem" }}
+      // ...
+    ></input>
+  );
 }
 export default function ExampleB () {
-	// Input state
-	const [inputText, setInputText] = useState("");
-	// Example event
-	const handleChange = function (e) {
-		console.log(e);
-	};
-	return (
-		{/* Container to align input and popup together */}
-		<div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
-			<EmojiPopup
-				// Use your input component
-				input={Input}
-				// Pass state from the parent component
-				inputText={inputText}
-				setInputText={setInputText}
-				// Add your event handlers
-				onChange={handleChange}
-				// ...
-			/>
-		</div>
-	);
+  // Input state
+  const [inputText, setInputText] = useState("");
+  // Example event
+  const handleChange = function (e) {
+    console.log(e);
+  };
+  return (
+    {/* Container to align input and popup together */}
+    <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
+      <EmojiPopup
+        // Use your input component
+        input={Input}
+        // Pass state from the parent component
+        inputText={inputText}
+        setInputText={setInputText}
+        // Add your event handlers
+        onChange={handleChange}
+        // ...
+      />
+    </div>
+  );
 }
 
 ```
