@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-// import EmojiPopup from "./lib/index";
-import EmojiPopup from "react-emoji-popup-lister";
+import EmojiPopup from "./lib/index";
+// import EmojiPopup from "react-emoji-popup-lister";
 
 // Custom input (optional)
 const Input = function (props) {
