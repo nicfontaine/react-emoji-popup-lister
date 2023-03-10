@@ -5,6 +5,8 @@
 
 ![Screenshot](https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png)
 
+<a href="https://github.com/nicfontaine/react-emoji-popup-lister"><img width="450px" alt="Screenshot" src="https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png"></a>
+
 ## 📁 About
 Type and insert emojis within your inputs, via their shortcode values.   
 `:cool:` :cool:
@@ -37,7 +39,7 @@ export default function ExampleB () {
       maxWidth="300px"
       placeholder="Add a profile description"
       theme="light"
-			ariaLabel="Profile description input"
+      ariaLabel="Profile description input"
     />
   );
 }
