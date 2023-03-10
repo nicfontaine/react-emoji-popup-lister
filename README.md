@@ -1,20 +1,24 @@
 # React Emoji Popup Lister
 > Slack-lick emoji list and select via keyboard
 
+[![NPM](https://img.shields.io/npm/v/react-input-emoji.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
+
 ![Screenshot](https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png)
 
-## About
+## 📁 About
 Type and insert emojis within your inputs, via their shortcode values.   
 `:cool:` :cool:
 
-## Install
-`npm i -s react-emoji-popup-lister`
+## ⌨️ Install
+```bash
+npm i -s react-emoji-popup-lister
+```
 
-## Usage
+## 🚀 Usage
 
 ### 1. Basic
-```javascript
-import EmojiPopup from "emoji-popup-lister"
+```jsx
+import EmojiPopup from "react-emoji-popup-lister"
 
 export default function ExampleA () {
   return <EmojiPopup />
@@ -22,8 +26,8 @@ export default function ExampleA () {
 ```
 
 ### 2. Custom styling with props
-```javascript
-import EmojiPopup from "emoji-popup-lister"
+```jsx
+import EmojiPopup from "react-emoji-popup-lister"
 
 export default function ExampleB () {
   return (
@@ -42,46 +46,43 @@ export default function ExampleB () {
 ### 3. Provide an input component, state, and events from your parent component
 Also wrap in a container div, to align the input and popup   
 
-```javascript
+```jsx
 import { useState, useEffect } from "react";
-import EmojiPopup from "emoji-popup-lister"
+import EmojiPopup from "react-emoji-popup-lister"
 
+// Your input with props passed, including input value state
 function Input (props) {
-  // State update in child component
-  useEffect(() => { }, [props.value]);
-  return (
+	
+	useEffect(() => { }, [props.value]);
+  
+	return (
     <input
       // Required. Anything after is optional, and will override values
       {...props}
-      // Override existing input styles
+      // Override or extend default values
       className="your-class-name"
       placeholder="Your placeholder text"
-      // Use and extend styling inline
-      style={{ ...props.style, padding: "0.5rem" }}
-      // ...
-    ></input>
+      style={{ ...props.style, width: "100%" }}
+    />
   );
 }
 
+// Parend component with state, passed input, events, etc.
 export default function ExampleC () {
-  // Input state
-  const [inputText, setInputText] = useState("");
-  // State update in parent component
+	
+	const [text, setText] = useState("");
   useEffect(() => { }, [inputText]);
-  // Example event
-  const handleChange = function (e) { };
+  
+	const handleChange = function (e) { };
+
   return (
     {/* Container to align input and popup together */}
     <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
       <EmojiPopup
-        // Use your input component
         input={Input}
-        // Pass state from the parent component
-        inputText={inputText}
-        setInputText={setInputText}
-        // Add your event handlers
+        inputText={text}
+        setInputText={setText}
         onChange={handleChange}
-        // ...
       >
         <div>Child content...</div>
       </EmojiPopup>
@@ -90,7 +91,7 @@ export default function ExampleC () {
 }
 ```
 
-## Prop Options
+## 🗃️ Prop Options
 > All are optional
 
 | Prop | Type | Default | Description |
@@ -103,21 +104,21 @@ export default function ExampleC () {
 | `maxWidth` | `number` | `400px` | Scroll container width cap |
 | `maxHeight` | `number` | `250px` | Scroll container height cap |
 | `placeholder` | `string` | `""` | Input placeholder value |
-| `ariaLabel` | `string` | `""` | Input `aria-label` value |
-
-## Prop Events
+| `ariaLabel` | `string` | `""` | Input `aria-label` value |   
+   
+## 🪅 Prop Events
 > Place on `<EmojiPopup>` component, **Not** your custom `<input>` - as this will override necessary events
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `onClick` | `function` | - | Input element Click event (* Not emoji list) |
-| `onChange` | `function` | - | Input value Change event |
-| `onKeyDown` | `function` | - | Input KeyDown event |
-| `onKeyUp` | `function` | - | Input KeyUp event |
-| `onFocus` | `function` | - | Input Focus event |
-| `onBlur` | `function` | - | Input Blur event |
-
-## Shortcuts
+| Prop | Description |
+| --- | --- |
+| `onClick` | Input element Click event (* Not emoji list) |
+| `onChange` | Input value Change event |
+| `onKeyDown` | Input KeyDown event |
+| `onKeyUp` | Input KeyUp event |
+| `onFocus` | Input Focus event |
+| `onBlur` | Input Blur event |   
+   
+## 🗺️ Shortcuts
 > These will `preventDefault` in the input while the popup is active
 
 | Key | Function |
@@ -126,9 +127,9 @@ export default function ExampleC () {
 | `ArrowDown` | Down in emoji list |
 | `Home` | Start of emoji list |
 | `End` | End of emoji list |
-| `Enter` or `Tab` | Choose highlighted emoji |
-
-## Styling
+| `Enter` or `Tab` | Choose highlighted emoji |   
+   
+## 🖌️ Styling
 
 #### Input
 Input contains the className `emoji-popup-lister-input`. This can also be overridden by passing your own input component with a `className` prop after the required `{...props}`
@@ -136,12 +137,12 @@ Input contains the className `emoji-popup-lister-input`. This can also be overri
 #### Popup
 Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
 
-## Todo
+## 🏗️ Todo
 - (Bug) Support type-search immediately after an existing emoji character
 - (Feature) Option to replace full emoji string automatically (2 colons)
 - (Bug) Deleting "combo" emojis on Firefox doesn't remove the entire emoji
 - (Bug) Escape to hide gets reset on successive typing
 - (Feature) Add better positioning support
 
-## License
+## 🖊️ License
 MIT © [nicfontaine](https://github.com/nicfontaine)

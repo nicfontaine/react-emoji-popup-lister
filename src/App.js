@@ -16,13 +16,10 @@ const Input = function (props) {
 				{...props}
 				// Override default values
 				// NOTE: Do Not override these props: value, onKeyDown, onKeyUp, onChange
-				// className="test-default-class"
 				placeholder="Use &quot;:&quot; to type an emoji"
-				// Use and extend styling
 				style={{ ...props.style, padding: "0.7rem", minHeight: "80px" }}
 				aria-label="Profile description"
 				autoFocus={true}
-			// ...
 			></textarea>
 		</>
 	);
@@ -30,9 +27,7 @@ const Input = function (props) {
 
 const App = function () {
 
-	// Controlled input state (*required)
 	const [inputText, setInputText] = useState("");
-
 	useEffect(() => { /* Input value state change */ }, [inputText]);
 
 	// Additional Event handlers for input (optional)
@@ -59,9 +54,7 @@ const App = function () {
 					listMax="40"
 					maxHeight="170px"
 					maxWidth="350px"
-					placeholder="Placeholder text"
 					theme="dark"
-					ariaLabel="Aria label text"
 					onChange={handleChange}
 					onClick={handleClick}
 					onKeyDown={handleKeyDown}

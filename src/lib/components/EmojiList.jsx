@@ -3,13 +3,12 @@ import { useEffect, useRef } from "react";
 const EmojiList = function ({
 	active,
 	list,
-	elIndex,
 	setElIndex,
 	mouseNav,
 	setMouseNav,
-	emojiList,
-	emojiSearchString,
-	...props
+	emoji,
+	maxWidth,
+	maxHeight,
 }) {
 
 	const emojiListerRef = useRef(null);
@@ -23,11 +22,11 @@ const EmojiList = function ({
 				liActive.scrollIntoView({ behavior: "auto", block: "center" });
 			}
 		}
-	}, [emojiList]);
+	}, [emoji.list]);
 	
 	// List item events
-	const handleItemClick = function (e, emoji) {
-		list.select(emoji);
+	const handleItemClick = function (e, _emoji) {
+		list.select(_emoji);
 		// TODO: Focus back to input
 	};
 	const handleItemMouseEnter = function (e, i) {
@@ -45,19 +44,19 @@ const EmojiList = function ({
 				ref={emojiListerRef}
 				className="emoji-popup-lister"
 				style={{
-					maxHeight: props.maxHeight,
-					maxWidth: props.maxWidth,
+					maxHeight: maxHeight,
+					maxWidth: maxWidth,
 				}}
 			>
 				{active ? (
 					<>
-						{ emojiList.length ? emojiList.map((emoji, i) => {
+						{ emoji.list.length ? emoji.list.map((emoji, i) => {
 							return (
 								<div
 									aria-label={`Emoji list item: ${emoji.description}`}
 									className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
 									onClick={(e) => {
-										handleItemClick(e, emoji.emoji);
+										handleItemClick(e, emoji.emoji); 
 									}}
 									onMouseEnter={(e) => {
 										handleItemMouseEnter(e, i);
@@ -72,12 +71,12 @@ const EmojiList = function ({
 									</div>
 								</div>
 							);
-						}) : <div className="emoji-popup-lister-item-null">{emojiSearchString.length ? "No matches found" : "type for emoji search..."}</div> }
+						}) : <div className="emoji-popup-lister-item-null">{emoji.search.length ? "No matches found" : "type for emoji search..."}</div> }
 					</>
 				) : null}
 			</div>
 			<div className="emoji-popup-lister-how-to" aria-label="Emoji popup search total, and how-to">
-				<div className="left">Total: <strong>{emojiList.length}</strong></div>
+				<div className="left">Total: <strong>{emoji.list.length}</strong></div>
 				<div className="middle">🔼 🔽</div>
 				<div className="right">⏎</div>
 			</div>

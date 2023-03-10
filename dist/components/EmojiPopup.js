@@ -8,9 +8,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
 require("core-js/modules/es.string.replace.js");
 require("core-js/modules/esnext.string.replace-all.js");
-require("core-js/modules/es.string.search.js");
 require("./../style/emoji-popup.css");
 var _react = _interopRequireWildcard(require("react"));
 var _gemoji = require("gemoji");
@@ -18,7 +18,7 @@ var _fuzzySearch = _interopRequireDefault(require("fuzzy-search"));
 var _EmojiInput = _interopRequireDefault(require("./EmojiInput"));
 var _EmojiList = _interopRequireDefault(require("./EmojiList"));
 var _jsxRuntime = require("react/jsx-runtime");
-const _excluded = ["input", "inputText", "setInputText", "listMax", "maxWidth", "maxHeight", "placeholder", "theme"];
+const _excluded = ["input", "inputText", "setInputText", "theme", "listMax", "maxWidth", "maxHeight", "placeholder", "ariaLabel"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -38,25 +38,27 @@ const EmojiPopup = _ref => {
       input,
       inputText: userPropInputText,
       setInputText: setUserPropInputText,
+      theme = themeDefault,
       listMax = 6,
       maxWidth = "400px",
       maxHeight = "250px",
       placeholder,
-      theme = themeDefault
+      ariaLabel
     } = _ref,
     props = _objectWithoutProperties(_ref, _excluded);
   const [themeMode, setThemeMode] = (0, _react.useState)(theme);
   const [active, setActive] = (0, _react.useState)(false);
   const [inputText, setInputText] = (0, _react.useState)("");
-  const [emojiList, setEmojiList] = (0, _react.useState)([]);
-  const [emojiSearchString, setEmojiSearchString] = (0, _react.useState)("");
-  const [emojiSelect, setEmojiSelect] = (0, _react.useState)("");
+  const [emoji, setEmoji] = (0, _react.useState)({
+    list: [],
+    search: "",
+    select: ""
+  });
   const [mouseNav, setMouseNav] = (0, _react.useState)(false);
   const wrapperRef = (0, _react.useRef)(null);
   const emojiContainerRef = (0, _react.useRef)(null);
   // TODO: Make sure this doesn't have any race conditions
   const [selStart, setSelStart] = (0, _react.useState)(-1);
-  // TODO: Replace global index w/ state
   const [elIndex, setElIndex] = (0, _react.useState)(0);
 
   // Reset index, and add display transition class
@@ -65,7 +67,6 @@ const EmojiPopup = _ref => {
       emojiContainerRef.current.classList.add("active");
     } else {
       setElIndex(0);
-      // elIndex = 0;
       emojiContainerRef.current.classList.remove("active");
     }
   }, [active]);
@@ -100,49 +101,54 @@ const EmojiPopup = _ref => {
 
   // Display fuzzy-matched emojis
   (0, _react.useEffect)(() => {
-    list.update(emojiSearchString);
-  }, [emojiSearchString]);
+    list.update(emoji.search);
+  }, [emoji.search]);
 
   // Replace emoji string match with emoji, and reset states
   (0, _react.useEffect)(() => {
-    if (emojiSelect) {
-      const inp = wrapperRef.current.children[0];
+    if (emoji.select) {
+      // console.log([...emoji.select]);
       // Calculate selection start, to fix going to the end of input
-      const delta = inp.selectionStart - inputText.indexOf(emojiSearchString);
-      // selStart = inp.selectionStart - delta + emojiSelect.length;
-      setSelStart(inp.selectionStart - delta + emojiSelect.length);
-      setInputText(inputText.replace("".concat(emojiSearchString), emojiSelect));
-      // console.log([...emojiSelect]);
+      const inp = wrapperRef.current.children[0];
+      const delta = inp.selectionStart - inputText.indexOf(emoji.search);
+      setSelStart(inp.selectionStart - delta + emoji.select.length);
+      setInputText(inputText.replace("".concat(emoji.search), emoji.select));
       setActive(false);
-      setEmojiSearchString("");
-      setEmojiSelect("");
+      setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
+        string: "",
+        select: ""
+      }));
     }
-  }, [emojiSelect]);
+  }, [emoji.select]);
 
   // List display updates helpers
   (0, _react.useEffect)(() => {
     list.update();
   }, [elIndex]);
   const list = {
-    next() {
-      setElIndex((elIndex + 1) % list.checkMax());
-    },
-    prev() {
-      setElIndex(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
-    },
     index(i) {
       setElIndex(i);
     },
+    next() {
+      list.index((elIndex + 1) % list.checkMax());
+    },
+    prev() {
+      list.index(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
+    },
     select(override) {
       if (override) {
-        setEmojiSelect(override);
-      } else if (emojiList.length && emojiList[elIndex]) {
-        setEmojiSelect(emojiList[elIndex].emoji);
+        setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
+          select: override
+        }));
+      } else if (emoji.list.length && emoji.list[elIndex]) {
+        setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
+          select: emoji.list[elIndex].emoji
+        }));
       }
     },
-    checkMax: () => listMax < emojiList.length ? listMax : emojiList.length,
+    checkMax: () => listMax < emoji.list.length ? listMax : emoji.list.length,
     update(str) {
-      let list = emojiList.slice();
+      let list = emoji.list.slice();
       if (str && str.length) {
         str = str.replaceAll(":", "");
         const search = fuzzysearch.search(str).slice(0, listMax);
@@ -153,7 +159,9 @@ const EmojiPopup = _ref => {
         s.active = i === elIndex ? true : false;
         return s;
       });
-      setEmojiList(list);
+      setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
+        list
+      }));
     }
   };
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
@@ -167,25 +175,27 @@ const EmojiPopup = _ref => {
         active: active,
         setActive: setActive,
         list: list,
-        setEmojiSearchString: setEmojiSearchString,
-        emojiList: emojiList,
+        emoji: emoji,
+        setEmoji: setEmoji,
         selStart: selStart,
         setSelStart: setSelStart,
-        setMouseNav: setMouseNav
+        setMouseNav: setMouseNav,
+        placeholder: placeholder,
+        ariaLabel: ariaLabel
       }, props)), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
         className: "emoji-popup-lister-container",
         "aria-label": active ? "Emoji lister popup" : "",
         ref: emojiContainerRef,
-        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_EmojiList.default, _objectSpread({
+        children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_EmojiList.default, {
           active: active,
           list: list,
-          elIndex: elIndex,
           setElIndex: setElIndex,
           mouseNav: mouseNav,
           setMouseNav: setMouseNav,
-          emojiList: emojiList,
-          emojiSearchString: emojiSearchString
-        }, props))
+          emoji: emoji,
+          maxWidth: maxWidth,
+          maxHeight: maxHeight
+        })
       }), props.children ? _objectSpread({}, props.children) : null]
     })
   });

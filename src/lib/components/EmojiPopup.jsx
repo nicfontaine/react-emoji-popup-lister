@@ -12,11 +12,12 @@ const EmojiPopup = ({
 	input,
 	inputText: userPropInputText,
 	setInputText: setUserPropInputText,
+	theme = themeDefault,
 	listMax = 6,
 	maxWidth = "400px",
 	maxHeight = "250px",
 	placeholder,
-	theme = themeDefault,
+	ariaLabel,
 	...props
 }) => {
 
@@ -24,15 +25,16 @@ const EmojiPopup = ({
 
 	const [active, setActive] = useState(false);
 	const [inputText, setInputText] = useState("");
-	const [emojiList, setEmojiList] = useState([]);
-	const [emojiSearchString, setEmojiSearchString] = useState("");
-	const [emojiSelect, setEmojiSelect] = useState("");
+	const [emoji, setEmoji] = useState({
+		list: [],
+		search: "",
+		select: "",
+	});
 	const [mouseNav, setMouseNav] = useState(false);
 	const wrapperRef = useRef(null);
 	const emojiContainerRef = useRef(null);
 	// TODO: Make sure this doesn't have any race conditions
 	const [selStart, setSelStart] = useState(-1);
-	// TODO: Replace global index w/ state
 	const [elIndex, setElIndex] = useState(0);
 
 	// Reset index, and add display transition class
@@ -41,7 +43,6 @@ const EmojiPopup = ({
 			emojiContainerRef.current.classList.add("active");
 		} else {
 			setElIndex(0);
-			// elIndex = 0;
 			emojiContainerRef.current.classList.remove("active");
 		}
 	}, [active]);
@@ -77,24 +78,22 @@ const EmojiPopup = ({
 
 	// Display fuzzy-matched emojis
 	useEffect(() => {
-		list.update(emojiSearchString);
-	}, [emojiSearchString]);
+		list.update(emoji.search);
+	}, [emoji.search]);
 
 	// Replace emoji string match with emoji, and reset states
 	useEffect(() => {
-		if (emojiSelect) {
-			const inp = wrapperRef.current.children[0];
+		if (emoji.select) {
+			// console.log([...emoji.select]);
 			// Calculate selection start, to fix going to the end of input
-			const delta = inp.selectionStart - inputText.indexOf(emojiSearchString);
-			// selStart = inp.selectionStart - delta + emojiSelect.length;
-			setSelStart(inp.selectionStart - delta + emojiSelect.length);
-			setInputText(inputText.replace(`${emojiSearchString}`, emojiSelect));
-			// console.log([...emojiSelect]);
+			const inp = wrapperRef.current.children[0];
+			const delta = inp.selectionStart - inputText.indexOf(emoji.search);
+			setSelStart(inp.selectionStart - delta + emoji.select.length);
+			setInputText(inputText.replace(`${emoji.search}`, emoji.select));
 			setActive(false);
-			setEmojiSearchString("");
-			setEmojiSelect("");
+			setEmoji({ ...emoji, string: "", select: "" });
 		}
-	}, [emojiSelect]);
+	}, [emoji.select]);
 
 	// List display updates helpers
 	useEffect(() => {
@@ -102,25 +101,25 @@ const EmojiPopup = ({
 	}, [elIndex]);
 
 	const list = {
-		next () {
-			setElIndex((elIndex + 1) % list.checkMax());
-		},
-		prev () {
-			setElIndex(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
-		},
 		index (i) {
 			setElIndex(i);
 		},
+		next () {
+			list.index((elIndex + 1) % list.checkMax());
+		},
+		prev () {
+			list.index(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
+		},
 		select (override) {
 			if (override) {
-				setEmojiSelect(override);
-			} else if (emojiList.length && emojiList[elIndex]) {
-				setEmojiSelect(emojiList[elIndex].emoji);
+				setEmoji({ ...emoji, select: override });
+			} else if (emoji.list.length && emoji.list[elIndex]) {
+				setEmoji({ ...emoji, select: emoji.list[elIndex].emoji });
 			}
 		},
-		checkMax: () => listMax < emojiList.length ? listMax : emojiList.length,
+		checkMax: () => listMax < emoji.list.length ? listMax : emoji.list.length,
 		update (str) {
-			let list = emojiList.slice();
+			let list = emoji.list.slice();
 			if (str && str.length) {
 				str = str.replaceAll(":", "");
 				const search = fuzzysearch.search(str).slice(0, listMax);
@@ -131,7 +130,7 @@ const EmojiPopup = ({
 				s.active = i === elIndex ? true : false;
 				return s;
 			});
-			setEmojiList(list);
+			setEmoji({ ...emoji, list });
 		},
 		
 	};
@@ -149,11 +148,13 @@ const EmojiPopup = ({
 					active={active}
 					setActive={setActive}
 					list={list}
-					setEmojiSearchString={setEmojiSearchString}
-					emojiList={emojiList}
+					emoji={emoji}
+					setEmoji={setEmoji}
 					selStart={selStart}
 					setSelStart={setSelStart}
 					setMouseNav={setMouseNav}
+					placeholder={placeholder}
+					ariaLabel={ariaLabel}
 					{...props}
 				></EmojiInput>
 				
@@ -165,13 +166,12 @@ const EmojiPopup = ({
 					<EmojiList
 						active={active}
 						list={list}
-						elIndex={elIndex}
 						setElIndex={setElIndex}
 						mouseNav={mouseNav}
 						setMouseNav={setMouseNav}
-						emojiList={emojiList}
-						emojiSearchString={emojiSearchString}
-						{...props}
+						emoji={emoji}
+						maxWidth={maxWidth}
+						maxHeight={maxHeight}
 					></EmojiList>
 				
 				</div>

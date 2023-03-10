@@ -7,11 +7,13 @@ const EmojiInput = function ({
 	active,
 	setActive,
 	list,
-	setEmojiSearchString,
-	emojiList,
+	emoji,
+	setEmoji,
 	selStart,
 	setSelStart,
 	setMouseNav,
+	placeholder,
+	ariaLabel,
 	...props
 }) {
 
@@ -36,9 +38,9 @@ const EmojiInput = function ({
 		} else if (e.key === "Home") {
 			list.index(0);
 		} else if (e.key === "End") {
-			list.index(emojiList.length - 1);
+			list.index(emoji.list.length - 1);
 		} else if (e.key === "Escape") {
-			setEmojiSearchString("");
+			setEmoji({ ...emoji, search: "" });
 			setActive(false);
 		}
 	};
@@ -51,7 +53,7 @@ const EmojiInput = function ({
 		const start = e.target.selectionStart - 1;
 		var _active = active;
 		if (e.key === "Escape") {
-			setEmojiSearchString("");
+			setEmoji({ ...emoji, search: "" });
 			setActive(false);
 			return;
 		}
@@ -64,8 +66,8 @@ const EmojiInput = function ({
 			_active = false;
 		}
 		const str = emojiSubstring(inputText, start);
-		_active =  str.length ? true : false;
-		setEmojiSearchString(str);
+		_active = str.length ? true : false;
+		setEmoji({ ...emoji, search: str });
 		setActive(_active);
 	};
 
@@ -100,7 +102,8 @@ const EmojiInput = function ({
 					onKeyDown={handleKeyDown}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
-					aria-label="Generic input with emoji support"
+					placeholder={placeholder || ""}
+					aria-label={ariaLabel || "Generic input with emoji support"}
 					className="emoji-popup-lister-input"
 				/>
 			) : (
@@ -110,8 +113,8 @@ const EmojiInput = function ({
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}
 					onKeyDown={handleKeyDown}
-					placeholder={props.placeholder}
-					aria-label={props.ariaLabel || "Generic input with emoji support"}
+					placeholder={placeholder || ""}
+					aria-label={ariaLabel || "Generic input with emoji support"}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					className="emoji-popup-lister-input"
