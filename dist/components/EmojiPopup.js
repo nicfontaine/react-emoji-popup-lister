@@ -32,8 +32,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 const fuzzysearch = new _fuzzySearch.default(_gemoji.gemoji, ["names"], {
   sort: true
 });
-const themeDefault = "dark";
-var elIndex = 0;
+const themeDefault = "auto";
 const EmojiPopup = _ref => {
   let {
       input,
@@ -57,13 +56,16 @@ const EmojiPopup = _ref => {
   const emojiContainerRef = (0, _react.useRef)(null);
   // TODO: Make sure this doesn't have any race conditions
   const [selStart, setSelStart] = (0, _react.useState)(-1);
+  // TODO: Replace global index w/ state
+  const [elIndex, setElIndex] = (0, _react.useState)(0);
 
   // Reset index, and add display transition class
   (0, _react.useEffect)(() => {
     if (active) {
       emojiContainerRef.current.classList.add("active");
     } else {
-      elIndex = 0;
+      setElIndex(0);
+      // elIndex = 0;
       emojiContainerRef.current.classList.remove("active");
     }
   }, [active]);
@@ -118,18 +120,18 @@ const EmojiPopup = _ref => {
   }, [emojiSelect]);
 
   // List display updates helpers
+  (0, _react.useEffect)(() => {
+    list.update();
+  }, [elIndex]);
   const list = {
     next() {
-      elIndex = (elIndex + 1) % list.checkMax();
-      list.update();
+      setElIndex((elIndex + 1) % list.checkMax());
     },
     prev() {
-      elIndex = elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1;
-      list.update();
+      setElIndex(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
     },
     index(i) {
-      elIndex = i;
-      list.update();
+      setElIndex(i);
     },
     select(override) {
       if (override) {
@@ -146,7 +148,7 @@ const EmojiPopup = _ref => {
         const search = fuzzysearch.search(str).slice(0, listMax);
         list = search.length ? search : [];
       }
-      if (elIndex >= list.length) elIndex = 0;
+      if (elIndex >= list.length) setElIndex(0);
       list = list.map((s, i) => {
         s.active = i === elIndex ? true : false;
         return s;
@@ -178,6 +180,7 @@ const EmojiPopup = _ref => {
           active: active,
           list: list,
           elIndex: elIndex,
+          setElIndex: setElIndex,
           mouseNav: mouseNav,
           setMouseNav: setMouseNav,
           emojiList: emojiList,

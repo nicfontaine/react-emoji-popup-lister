@@ -4,6 +4,7 @@ const EmojiList = function ({
 	active,
 	list,
 	elIndex,
+	setElIndex,
 	mouseNav,
 	setMouseNav,
 	emojiList,
@@ -31,7 +32,7 @@ const EmojiList = function ({
 	};
 	const handleItemMouseEnter = function (e, i) {
 		setMouseNav(true);
-		elIndex = i;
+		setElIndex(i);
 		list.update();
 	};
 	const handleItemMouseLeave = function (e) {
