@@ -1,7 +1,7 @@
 # React Emoji Popup Lister
 > Slack-lick emoji list and select via keyboard
 
-[![NPM](https://img.shields.io/npm/v/react-input-emoji.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
+[![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
 
 ![Screenshot](https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png)
 
@@ -35,9 +35,9 @@ export default function ExampleB () {
       listMax="40"
       maxHeight="200px"
       maxWidth="300px"
-      placeholder="Your placeholder text"
+      placeholder="Add a profile description"
       theme="light"
-      // ...
+			ariaLabel="Profile description input"
     />
   );
 }
@@ -53,9 +53,9 @@ import EmojiPopup from "react-emoji-popup-lister"
 // Your input with props passed, including input value state
 function Input (props) {
 	
-	useEffect(() => { }, [props.value]);
+  useEffect(() => { }, [props.value]);
   
-	return (
+  return (
     <input
       // Required. Anything after is optional, and will override values
       {...props}
@@ -70,10 +70,10 @@ function Input (props) {
 // Parend component with state, passed input, events, etc.
 export default function ExampleC () {
 	
-	const [text, setText] = useState("");
+  const [text, setText] = useState("");
   useEffect(() => { }, [inputText]);
   
-	const handleChange = function (e) { };
+  const handleChange = function (e) { };
 
   return (
     {/* Container to align input and popup together */}
