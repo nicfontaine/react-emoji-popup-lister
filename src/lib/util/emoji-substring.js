@@ -30,9 +30,11 @@ const emojiSubstring = function (text, caret) {
 		ri++;
 	}
 
-	// Return if caret is on ":", with characters after
+	// Return if caret is on ":" with characters after, and cases before ":"
 	if (rtxt.charAt(0) === ":" && rtxt.length > 1) {
-		return rtxt;
+		if (!text[caret - 1] || stopChars.indexOf(text[caret - 1]) >= 0) {
+			return rtxt;
+		}
 	}
 	
 	// Decrement from caret to beginning
