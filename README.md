@@ -3,9 +3,7 @@
 
 [![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
 
-![Screenshot](https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png)
-
-<a href="https://github.com/nicfontaine/react-emoji-popup-lister"><img width="450px" alt="Screenshot" src="https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-01.png"></a>
+<a href="https://github.com/nicfontaine/react-emoji-popup-lister"><img width="450px" alt="Screenshot" src="https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/screenshot-form-01.png"></a>
 
 ## 📁 About
 Type and insert emojis within your inputs, via their shortcode values.   
