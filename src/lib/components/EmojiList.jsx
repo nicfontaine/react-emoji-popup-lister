@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styles from "./../styles/EmojiPopup.module.css";
 
 const EmojiList = function ({
 	active,
@@ -9,17 +10,18 @@ const EmojiList = function ({
 	emoji,
 	maxWidth,
 	maxHeight,
+	footer,
 }) {
 
 	const emojiListerRef = useRef(null);
+	const activeItem = useRef(null);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse
 	useEffect(() => {
 		if (!mouseNav && emojiListerRef?.current) {
-			const liActive = emojiListerRef.current.getElementsByClassName("active")[0];
-			if (liActive) {
-				liActive.scrollIntoView({ behavior: "auto", block: "center" });
+			if (activeItem?.current) {
+				activeItem.current.scrollIntoView({ behavior: "auto", block: "center" });
 			}
 		}
 	}, [emoji.list]);
@@ -42,7 +44,7 @@ const EmojiList = function ({
 		<>
 			<div
 				ref={emojiListerRef}
-				className="emoji-popup-lister"
+				className={styles.lister}
 				style={{
 					maxHeight: maxHeight,
 					maxWidth: maxWidth,
@@ -54,7 +56,9 @@ const EmojiList = function ({
 							return (
 								<div
 									aria-label={`Emoji list item: ${emoji.description}`}
-									className={`emoji-popup-lister-item ${emoji.active ? "active" : ""}`} key={emoji.emoji}
+									className={`${styles.item} ${emoji.active ? styles.active : ""}`}
+									key={emoji.emoji}
+									ref={emoji.active ? activeItem : null}
 									onClick={(e) => {
 										handleItemClick(e, emoji.emoji); 
 									}}
@@ -65,21 +69,23 @@ const EmojiList = function ({
 										handleItemMouseLeave();
 									}}
 								>
-									<div className="inner">
-										<div className="emoji">{emoji.emoji}</div>
-										<code className="code">:{emoji.names.join(",")}</code>
+									<div className={styles.inner}>
+										<div className={styles.emoji}>{emoji.emoji}</div>
+										<code className={styles.code}>:{emoji.names.join(",")}</code>
 									</div>
 								</div>
 							);
-						}) : <div className="emoji-popup-lister-item-null">{emoji.search.length ? "No matches found" : "type for emoji search..."}</div> }
+						}) : <div className={styles.itemNull}>{emoji.search.length ? "No matches found" : "type for emoji search..."}</div> }
 					</>
 				) : null}
 			</div>
-			<div className="emoji-popup-lister-how-to" aria-label="Emoji popup search total, and how-to">
-				<div className="left">Total: <strong>{emoji.list.length}</strong></div>
-				<div className="middle">🔼 🔽</div>
-				<div className="right">⏎</div>
-			</div>
+			{footer ? (
+				<div className={styles.howto} aria-label="Emoji popup search total, and how-to">
+					<div className={styles.left}>Total: <strong>{emoji.list.length}</strong></div>
+					<div className={styles.middle}>🔼 🔽</div>
+					<div className={styles.right}>⏎</div>
+				</div>
+			) : null}
 		</>
 	);
 	

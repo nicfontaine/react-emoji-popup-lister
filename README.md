@@ -100,9 +100,11 @@ export default function ExampleC () {
 | `inputText` | useState `string` value | `""` | Store state in your parent component |
 | `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
 | `listMax` | `number` | `6` | Max number of emoji matches to display |
-| `theme` | `light` `dark` `auto`  | `dark` | Popup display theme style |
+| `theme` | `string`  | `auto` | Popup display theme style. `light` `dark` `auto` |
+| `strict` | `boolean` | `true` | Strict mode will ignore `a:b`, `👋:ab` |
 | `maxWidth` | `number` | `400px` | Scroll container width cap |
 | `maxHeight` | `number` | `250px` | Scroll container height cap |
+| `footer` | `boolean` | `true` | Display or hide footer info bar |
 | `placeholder` | `string` | `""` | Input placeholder value |
 | `ariaLabel` | `string` | `""` | Input `aria-label` value |   
    

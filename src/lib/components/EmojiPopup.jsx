@@ -1,4 +1,4 @@
-import "./../style/emoji-popup.css";
+import styles from "./../styles/EmojiPopup.module.css";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { gemoji } from "gemoji";
@@ -13,9 +13,11 @@ const EmojiPopup = ({
 	inputText: userPropInputText,
 	setInputText: setUserPropInputText,
 	theme = themeDefault,
+	strict = true,
 	listMax = 6,
 	maxWidth = "400px",
 	maxHeight = "250px",
+	footer = true,
 	placeholder,
 	ariaLabel,
 	...props
@@ -40,19 +42,19 @@ const EmojiPopup = ({
 	// Reset index, and add display transition class
 	useEffect(() => {
 		if (active) {
-			emojiContainerRef.current.classList.add("active");
+			emojiContainerRef.current.classList.add(styles["active"]);
 		} else {
 			setElIndex(0);
-			emojiContainerRef.current.classList.remove("active");
+			emojiContainerRef.current.classList.remove(styles["active"]);
 		}
 	}, [active]);
 
 	// Theme change styling
 	useEffect(() => {
-		wrapperRef.current.classList.remove("theme-light");
-		wrapperRef.current.classList.remove("theme-dark");
+		wrapperRef.current.classList.remove(styles["themelight"]);
+		wrapperRef.current.classList.remove(styles["themedark"]);
 		if (themeMode === "dark" || themeMode === "light") {
-			wrapperRef.current.classList.add(`theme-${themeMode}`);
+			wrapperRef.current.classList.add(styles[`theme${themeMode}`]);
 		}
 	}, [themeMode]);
 
@@ -74,6 +76,8 @@ const EmojiPopup = ({
 		const inp = wrapperRef.current.children[0];
 		inp.selectionStart = selStart;
 		inp.selectionEnd = selStart;
+		// Focus input when user clicks list item
+		if (inputText) inp.focus();
 	}, [inputText]);
 
 	// Display fuzzy-matched emojis
@@ -139,7 +143,7 @@ const EmojiPopup = ({
 
 		<>
 			
-			<div ref={wrapperRef} className="emoji-popup-lister-wrapper">
+			<div ref={wrapperRef} className={styles.wrapper}>
 
 				<EmojiInput
 					input={input}
@@ -155,11 +159,12 @@ const EmojiPopup = ({
 					setMouseNav={setMouseNav}
 					placeholder={placeholder}
 					ariaLabel={ariaLabel}
+					strict={strict}
 					{...props}
 				></EmojiInput>
 				
 				<div
-					className="emoji-popup-lister-container"
+					className={styles.container}
 					aria-label={active ? "Emoji lister popup" : ""}
 					ref={emojiContainerRef}
 				>
@@ -172,6 +177,7 @@ const EmojiPopup = ({
 						emoji={emoji}
 						maxWidth={maxWidth}
 						maxHeight={maxHeight}
+						footer={footer}
 					></EmojiList>
 				
 				</div>

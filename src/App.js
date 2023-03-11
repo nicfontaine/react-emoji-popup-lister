@@ -19,7 +19,7 @@ const Input = function (props) {
 				placeholder="Use &quot;:&quot; to type an emoji"
 				style={{ ...props.style, padding: "0.7rem", minHeight: "80px" }}
 				aria-label="Profile description"
-				autoFocus={true}
+				// autoFocus={true}
 			></textarea>
 		</>
 	);
@@ -55,6 +55,8 @@ const App = function () {
 					maxHeight="170px"
 					maxWidth="350px"
 					theme="dark"
+					footer={false}
+					strict={true}
 					onChange={handleChange}
 					onClick={handleClick}
 					onKeyDown={handleKeyDown}

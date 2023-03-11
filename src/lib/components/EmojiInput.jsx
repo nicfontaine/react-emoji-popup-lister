@@ -1,4 +1,5 @@
 import emojiSubstring from "../util/emoji-substring";
+import styles from "./../styles/EmojiPopup.module.css";
 
 const EmojiInput = function ({
 	input,
@@ -14,6 +15,7 @@ const EmojiInput = function ({
 	setMouseNav,
 	placeholder,
 	ariaLabel,
+	strict,
 	...props
 }) {
 
@@ -65,7 +67,7 @@ const EmojiInput = function ({
 		} else if (e.key === "Backspace" && inputText[start] === ":") {
 			_active = false;
 		}
-		const str = emojiSubstring(inputText, start);
+		const str = emojiSubstring(inputText, start, strict);
 		_active = str.length ? true : false;
 		setEmoji({ ...emoji, search: str });
 		setActive(_active);
@@ -104,7 +106,8 @@ const EmojiInput = function ({
 					onBlur={handleBlur}
 					placeholder={placeholder || ""}
 					aria-label={ariaLabel || "Generic input with emoji support"}
-					className="emoji-popup-lister-input"
+					className={styles.input}
+					id="input-field"
 				/>
 			) : (
 				<input
@@ -117,7 +120,8 @@ const EmojiInput = function ({
 					aria-label={ariaLabel || "Generic input with emoji support"}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
-					className="emoji-popup-lister-input"
+					className={styles.input}
+					id="input-field"
 				></input>
 			)}
 		</>
