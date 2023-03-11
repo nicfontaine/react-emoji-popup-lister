@@ -1,7 +1,7 @@
 {
   "name": "react-emoji-popup-lister",
   "description": "React emoji search & select by colon syntax, with keyboard navigation",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "author": "Nic Fontaine <nic@nicfontaine.com>",
   "license": "MIT",
   "repository": {
