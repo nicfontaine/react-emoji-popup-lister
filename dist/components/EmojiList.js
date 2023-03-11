@@ -8,7 +8,9 @@ require("core-js/modules/es.symbol.description.js");
 require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.string.search.js");
 var _react = require("react");
+var _EmojiPopupModule = _interopRequireDefault(require("./../styles/EmojiPopup.module.css"));
 var _jsxRuntime = require("react/jsx-runtime");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const EmojiList = function EmojiList(_ref) {
   let {
     active,
@@ -18,17 +20,18 @@ const EmojiList = function EmojiList(_ref) {
     setMouseNav,
     emoji,
     maxWidth,
-    maxHeight
+    maxHeight,
+    footer
   } = _ref;
   const emojiListerRef = (0, _react.useRef)(null);
+  const activeItem = (0, _react.useRef)(null);
 
   // Keep emoji row item selection in view
   // Disable functionality if user is navigating with mouse
   (0, _react.useEffect)(() => {
     if (!mouseNav && emojiListerRef !== null && emojiListerRef !== void 0 && emojiListerRef.current) {
-      const liActive = emojiListerRef.current.getElementsByClassName("active")[0];
-      if (liActive) {
-        liActive.scrollIntoView({
+      if (activeItem !== null && activeItem !== void 0 && activeItem.current) {
+        activeItem.current.scrollIntoView({
           behavior: "auto",
           block: "center"
         });
@@ -53,7 +56,7 @@ const EmojiList = function EmojiList(_ref) {
   return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
     children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       ref: emojiListerRef,
-      className: "emoji-popup-lister",
+      className: _EmojiPopupModule.default.lister,
       style: {
         maxHeight: maxHeight,
         maxWidth: maxWidth
@@ -62,7 +65,8 @@ const EmojiList = function EmojiList(_ref) {
         children: emoji.list.length ? emoji.list.map((emoji, i) => {
           return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
             "aria-label": "Emoji list item: ".concat(emoji.description),
-            className: "emoji-popup-lister-item ".concat(emoji.active ? "active" : ""),
+            className: "".concat(_EmojiPopupModule.default.item, " ").concat(emoji.active ? _EmojiPopupModule.default.active : ""),
+            ref: emoji.active ? activeItem : null,
             onClick: e => {
               handleItemClick(e, emoji.emoji);
             },
@@ -73,37 +77,37 @@ const EmojiList = function EmojiList(_ref) {
               handleItemMouseLeave();
             },
             children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
-              className: "inner",
+              className: _EmojiPopupModule.default.inner,
               children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-                className: "emoji",
+                className: _EmojiPopupModule.default.emoji,
                 children: emoji.emoji
               }), /*#__PURE__*/(0, _jsxRuntime.jsxs)("code", {
-                className: "code",
+                className: _EmojiPopupModule.default.code,
                 children: [":", emoji.names.join(",")]
               })]
             })
           }, emoji.emoji);
         }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-          className: "emoji-popup-lister-item-null",
+          className: _EmojiPopupModule.default.itemNull,
           children: emoji.search.length ? "No matches found" : "type for emoji search..."
         })
       }) : null
-    }), /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
-      className: "emoji-popup-lister-how-to",
+    }), footer ? /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+      className: _EmojiPopupModule.default.howto,
       "aria-label": "Emoji popup search total, and how-to",
       children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
-        className: "left",
+        className: _EmojiPopupModule.default.left,
         children: ["Total: ", /*#__PURE__*/(0, _jsxRuntime.jsx)("strong", {
           children: emoji.list.length
         })]
       }), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-        className: "middle",
+        className: _EmojiPopupModule.default.middle,
         children: "\uD83D\uDD3C \uD83D\uDD3D"
       }), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-        className: "right",
+        className: _EmojiPopupModule.default.right,
         children: "\u23CE"
       })]
-    })]
+    }) : null]
   });
 };
 var _default = EmojiList;
