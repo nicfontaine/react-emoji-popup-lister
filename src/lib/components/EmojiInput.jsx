@@ -107,7 +107,6 @@ const EmojiInput = function ({
 					placeholder={placeholder || ""}
 					aria-label={ariaLabel || "Generic input with emoji support"}
 					className={styles.input}
-					id="input-field"
 				/>
 			) : (
 				<input
@@ -121,7 +120,6 @@ const EmojiInput = function ({
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					className={styles.input}
-					id="input-field"
 				></input>
 			)}
 		</>

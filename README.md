@@ -130,16 +130,10 @@ export default function ExampleC () {
 | `Home` | Start of emoji list |
 | `End` | End of emoji list |
 | `Enter` or `Tab` | Choose highlighted emoji |   
-   
-## 🖌️ Styling
-
-#### Input
-Input contains the className `emoji-popup-lister-input`. This can also be overridden by passing your own input component with a `className` prop after the required `{...props}`
-
-#### Popup
-Currently there are no theming options. But most elements will follow the format `emoji-popup-lister-*` if you want to add your own custom CSS. The "Prop Options" section above contains a few basic display settings as well.
 
 ## 🏗️ Todo
+- (Feature) Add CSS classes for user styling
+- (Feature) Option to turn off Home/End shortcut
 - (Bug) Support type-search immediately after an existing emoji character
 - (Feature) Option to replace full emoji string automatically (2 colons)
 - (Bug) Deleting "combo" emojis on Firefox doesn't remove the entire emoji
