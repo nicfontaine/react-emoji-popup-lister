@@ -3,8 +3,8 @@ import styles from "./../styles/EmojiPopup.module.css";
 
 const EmojiInput = function ({
 	input,
-	inputText,
-	setInputText,
+	value,
+	setValue,
 	active,
 	setActive,
 	list,
@@ -64,10 +64,10 @@ const EmojiInput = function ({
 			_active = true;
 		} else if (e.key === " ") {
 			_active = false;
-		} else if (e.key === "Backspace" && inputText[start] === ":") {
+		} else if (e.key === "Backspace" && value[start] === ":") {
 			_active = false;
 		}
-		const str = emojiSubstring(inputText, start, strict);
+		const str = emojiSubstring(value, start, strict);
 		_active = str.length ? true : false;
 		setEmoji({ ...emoji, search: str });
 		setActive(_active);
@@ -79,7 +79,7 @@ const EmojiInput = function ({
 		props.onChange?.(e);
 		// selStart = e.target.selectionStart;
 		setSelStart(e.target.selectionStart);
-		setInputText(e.target.value);
+		setValue(e.target.value);
 	};
 
 	// User-passed event only
@@ -97,7 +97,7 @@ const EmojiInput = function ({
 		<>
 			{input ? (
 				<InputField
-					value={inputText}
+					value={value}
 					onClick={handleClick}
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}
@@ -110,7 +110,7 @@ const EmojiInput = function ({
 				/>
 			) : (
 				<input
-					value={inputText}
+					value={value}
 					onClick={handleClick}	
 					onChange={handleChange}
 					onKeyUp={handleKeyUp}

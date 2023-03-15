@@ -19,7 +19,7 @@ const Input = function (props) {
 				placeholder="Use &quot;:&quot; to type an emoji"
 				style={{ ...props.style, padding: "0.7rem", minHeight: "80px" }}
 				aria-label="Profile description"
-				// autoFocus={true}
+				autoFocus={true}
 			></textarea>
 		</>
 	);
@@ -27,8 +27,8 @@ const Input = function (props) {
 
 const App = function () {
 
-	const [inputText, setInputText] = useState("");
-	useEffect(() => { /* Input value state change */ }, [inputText]);
+	const [val, setVal] = useState("");
+	useEffect(() => { /* Input value state change */ }, [val]);
 
 	// Additional Event handlers for input (optional)
 	const handleKeyDown = (e) => { /* Keydown from parent */ };
@@ -41,19 +41,19 @@ const App = function () {
 
 		<div className="App">
 
-			<h1> React Emoji Popup Lister</h1>
+			<h1>Emoji Popup Lister</h1>
 
 			{/* Container to align input and popup together */}
 			<div style={{ maxWidth: "400px", margin: "1rem auto 0" }}>
 				<EmojiPopup
 					// State (optional) - Use if you want the value, or for useEffect hooks
-					inputText={inputText}
-					setInputText={setInputText}
+					value={val}
+					setValue={setVal}
 					// Additional (optional)
 					input={Input}
-					listMax="40"
-					maxHeight="170px"
-					maxWidth="350px"
+					listMax={12}
+					maxHeight={270}
+					maxWidth={350}
 					theme="dark"
 					// footer={false}
 					strict={true}

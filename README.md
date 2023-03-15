@@ -32,7 +32,7 @@ import EmojiPopup from "react-emoji-popup-lister"
 export default function ExampleB () {
   return (
     <EmojiPopup
-      listMax="40"
+      listMax={40}
       maxHeight="200px"
       maxWidth="300px"
       placeholder="Add a profile description"
@@ -97,16 +97,17 @@ export default function ExampleC () {
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `input` | input/textarea component | `<input>` | Pass your own input element or component |
-| `inputText` | useState `string` value | `""` | Store state in your parent component |
-| `setInputText` | useState `function` | setState | Set `inputText` from inside Emoji component |
+| `value` | useState `string` value | `""` | Store state in your parent component |
+| `setValue` | useState `function` | setState | Set `value` from inside Emoji component |
 | `listMax` | `number` | `6` | Max number of emoji matches to display |
 | `theme` | `string`  | `auto` | Popup display theme style. `light` `dark` `auto` |
 | `strict` | `boolean` | `true` | Strict mode will ignore `a:b`, `👋:ab` |
-| `maxWidth` | `number` | `400px` | Scroll container width cap |
-| `maxHeight` | `number` | `250px` | Scroll container height cap |
+| `maxWidth` | `number/string` | `400px` | Scroll container width cap |
+| `maxHeight` | `number/string` | `250px` | Scroll container height cap |
 | `footer` | `boolean` | `true` | Display or hide footer info bar |
 | `placeholder` | `string` | `""` | Input placeholder value |
 | `ariaLabel` | `string` | `""` | Input `aria-label` value |   
+   
    
 ## 🪅 Prop Events
 > Place on `<EmojiPopup>` component, **Not** your custom `<input>` - as this will override necessary events
@@ -120,6 +121,7 @@ export default function ExampleC () {
 | `onFocus` | Input Focus event |
 | `onBlur` | Input Blur event |   
    
+   
 ## 🗺️ Shortcuts
 > These will `preventDefault` in the input while the popup is active
 
@@ -130,15 +132,19 @@ export default function ExampleC () {
 | `Home` | Start of emoji list |
 | `End` | End of emoji list |
 | `Enter` or `Tab` | Choose highlighted emoji |   
+   
 
 ## 🏗️ Todo
-- (Feature) Add CSS classes for user styling
-- (Feature) Option to turn off Home/End shortcut
-- (Bug) Support type-search immediately after an existing emoji character
-- (Feature) Option to replace full emoji string automatically (2 colons)
-- (Bug) Deleting "combo" emojis on Firefox doesn't remove the entire emoji
-- (Bug) Escape to hide gets reset on successive typing
-- (Feature) Add better positioning support
+### Feature
+- Add CSS classes for user styling
+- Option to turn off Home/End shortcut
+- Option to replace full emoji string automatically (2 colons)
+- Add better positioning support
+
+### Bugs
+- Cursor over list, while using keyboard navigation still triggers hover change
+- Deleting "combo" emojis on Firefox doesn't remove the entire emoji
+- Escape to hide gets reset on successive typing
 
 ## 🖊️ License
 MIT © [nicfontaine](https://github.com/nicfontaine)

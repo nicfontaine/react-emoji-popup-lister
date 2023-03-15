@@ -10,8 +10,8 @@ const themeDefault = "auto";
 
 const EmojiPopup = ({
 	input,
-	inputText: userPropInputText,
-	setInputText: setUserPropInputText,
+	value: userPropInputText,
+	setValue: setUserPropInputText,
 	theme = themeDefault,
 	strict = true,
 	listMax = 6,
@@ -26,7 +26,7 @@ const EmojiPopup = ({
 	const [themeMode, setThemeMode] = useState(theme);
 
 	const [active, setActive] = useState(false);
-	const [inputText, setInputText] = useState("");
+	const [value, setValue] = useState("");
 	const [emoji, setEmoji] = useState({
 		list: [],
 		search: "",
@@ -72,13 +72,13 @@ const EmojiPopup = ({
 
 	// Sync user prop state with internal state
 	useEffect(() => {
-		setUserPropInputText?.(inputText);
+		setUserPropInputText?.(value);
 		const inp = wrapperRef.current.children[0];
 		inp.selectionStart = selStart;
 		inp.selectionEnd = selStart;
 		// Focus input when user clicks list item
-		if (inputText) inp.focus();
-	}, [inputText]);
+		if (value) inp.focus();
+	}, [value]);
 
 	// Display fuzzy-matched emojis
 	useEffect(() => {
@@ -91,9 +91,9 @@ const EmojiPopup = ({
 			// console.log([...emoji.select]);
 			// Calculate selection start, to fix going to the end of input
 			const inp = wrapperRef.current.children[0];
-			const delta = inp.selectionStart - inputText.indexOf(emoji.search);
+			const delta = inp.selectionStart - value.indexOf(emoji.search);
 			setSelStart(inp.selectionStart - delta + emoji.select.length);
-			setInputText(inputText.replace(`${emoji.search}`, emoji.select));
+			setValue(value.replace(`${emoji.search}`, emoji.select));
 			setActive(false);
 			setEmoji({ ...emoji, string: "", select: "" });
 		}
@@ -147,8 +147,8 @@ const EmojiPopup = ({
 
 				<EmojiInput
 					input={input}
-					inputText={inputText}
-					setInputText={setInputText}
+					value={value}
+					setValue={setValue}
 					active={active}
 					setActive={setActive}
 					list={list}
