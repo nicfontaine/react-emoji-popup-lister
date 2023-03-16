@@ -3,7 +3,7 @@
 
 [![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
 
-![Recording](https://github.com/nicfontaine/react-emoji-popup-lister/blob/main/img/rec-01.gif)
+![Recording](https://nicfontaine.com/dev/emoji-popup/rec-01.gif)
 
 ## 📁 About
 Type and insert emojis within your inputs, via their shortcode values.   
