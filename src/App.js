@@ -51,8 +51,8 @@ const App = function () {
 					setValue={setVal}
 					// Additional (optional)
 					input={Input}
-					listMax={6}
-					maxHeight={270}
+					listMax={20}
+					maxHeight={170}
 					maxWidth={350}
 					theme="dark"
 					// footer={false}
