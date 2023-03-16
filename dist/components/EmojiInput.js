@@ -8,7 +8,7 @@ exports.default = void 0;
 var _emojiSubstring = _interopRequireDefault(require("../util/emoji-substring"));
 var _EmojiPopupModule = _interopRequireDefault(require("./../styles/EmojiPopup.module.css"));
 var _jsxRuntime = require("react/jsx-runtime");
-const _excluded = ["input", "inputText", "setInputText", "active", "setActive", "list", "emoji", "setEmoji", "selStart", "setSelStart", "setMouseNav", "placeholder", "ariaLabel", "strict"];
+const _excluded = ["input", "value", "setValue", "active", "setActive", "list", "emoji", "setEmoji", "selStart", "setSelStart", "setMouseNav", "placeholder", "ariaLabel", "strict"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -20,8 +20,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 const EmojiInput = function EmojiInput(_ref) {
   let {
       input,
-      inputText,
-      setInputText,
+      value,
+      setValue,
       active,
       setActive,
       list,
@@ -84,10 +84,10 @@ const EmojiInput = function EmojiInput(_ref) {
       _active = true;
     } else if (e.key === " ") {
       _active = false;
-    } else if (e.key === "Backspace" && inputText[start] === ":") {
+    } else if (e.key === "Backspace" && value[start] === ":") {
       _active = false;
     }
-    const str = (0, _emojiSubstring.default)(inputText, start, strict);
+    const str = (0, _emojiSubstring.default)(value, start, strict);
     _active = str.length ? true : false;
     setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
       search: str
@@ -102,7 +102,7 @@ const EmojiInput = function EmojiInput(_ref) {
     (_props$onChange = props.onChange) === null || _props$onChange === void 0 ? void 0 : _props$onChange.call(props, e);
     // selStart = e.target.selectionStart;
     setSelStart(e.target.selectionStart);
-    setInputText(e.target.value);
+    setValue(e.target.value);
   };
 
   // User-passed event only
@@ -120,7 +120,7 @@ const EmojiInput = function EmojiInput(_ref) {
   };
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
     children: input ? /*#__PURE__*/(0, _jsxRuntime.jsx)(InputField, {
-      value: inputText,
+      value: value,
       onClick: handleClick,
       onChange: handleChange,
       onKeyUp: handleKeyUp,
@@ -131,7 +131,7 @@ const EmojiInput = function EmojiInput(_ref) {
       "aria-label": ariaLabel || "Generic input with emoji support",
       className: _EmojiPopupModule.default.input
     }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("input", {
-      value: inputText,
+      value: value,
       onClick: handleClick,
       onChange: handleChange,
       onKeyUp: handleKeyUp,

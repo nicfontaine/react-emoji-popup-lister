@@ -18,7 +18,7 @@ var _fuzzySearch = _interopRequireDefault(require("fuzzy-search"));
 var _EmojiInput = _interopRequireDefault(require("./EmojiInput"));
 var _EmojiList = _interopRequireDefault(require("./EmojiList"));
 var _jsxRuntime = require("react/jsx-runtime");
-const _excluded = ["input", "inputText", "setInputText", "theme", "strict", "listMax", "maxWidth", "maxHeight", "footer", "placeholder", "ariaLabel"];
+const _excluded = ["input", "value", "setValue", "theme", "strict", "listMax", "maxWidth", "maxHeight", "footer", "placeholder", "ariaLabel"];
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -36,8 +36,8 @@ const themeDefault = "auto";
 const EmojiPopup = _ref => {
   let {
       input,
-      inputText: userPropInputText,
-      setInputText: setUserPropInputText,
+      value: userPropInputText,
+      setValue: setUserPropInputText,
       theme = themeDefault,
       strict = true,
       listMax = 6,
@@ -50,7 +50,7 @@ const EmojiPopup = _ref => {
     props = _objectWithoutProperties(_ref, _excluded);
   const [themeMode, setThemeMode] = (0, _react.useState)(theme);
   const [active, setActive] = (0, _react.useState)(false);
-  const [inputText, setInputText] = (0, _react.useState)("");
+  const [value, setValue] = (0, _react.useState)("");
   const [emoji, setEmoji] = (0, _react.useState)({
     list: [],
     search: "",
@@ -95,13 +95,13 @@ const EmojiPopup = _ref => {
 
   // Sync user prop state with internal state
   (0, _react.useEffect)(() => {
-    setUserPropInputText === null || setUserPropInputText === void 0 ? void 0 : setUserPropInputText(inputText);
+    setUserPropInputText === null || setUserPropInputText === void 0 ? void 0 : setUserPropInputText(value);
     const inp = wrapperRef.current.children[0];
     inp.selectionStart = selStart;
     inp.selectionEnd = selStart;
     // Focus input when user clicks list item
-    if (inputText) inp.focus();
-  }, [inputText]);
+    if (value) inp.focus();
+  }, [value]);
 
   // Display fuzzy-matched emojis
   (0, _react.useEffect)(() => {
@@ -114,9 +114,9 @@ const EmojiPopup = _ref => {
       // console.log([...emoji.select]);
       // Calculate selection start, to fix going to the end of input
       const inp = wrapperRef.current.children[0];
-      const delta = inp.selectionStart - inputText.indexOf(emoji.search);
+      const delta = inp.selectionStart - value.indexOf(emoji.search);
       setSelStart(inp.selectionStart - delta + emoji.select.length);
-      setInputText(inputText.replace("".concat(emoji.search), emoji.select));
+      setValue(value.replace("".concat(emoji.search), emoji.select));
       setActive(false);
       setEmoji(_objectSpread(_objectSpread({}, emoji), {}, {
         string: "",
@@ -174,8 +174,8 @@ const EmojiPopup = _ref => {
       className: _EmojiPopupModule.default.wrapper,
       children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_EmojiInput.default, _objectSpread({
         input: input,
-        inputText: inputText,
-        setInputText: setInputText,
+        value: value,
+        setValue: setValue,
         active: active,
         setActive: setActive,
         list: list,
