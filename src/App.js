@@ -51,7 +51,7 @@ const App = function () {
 					setValue={setVal}
 					// Additional (optional)
 					input={Input}
-					listMax={12}
+					listMax={6}
 					maxHeight={270}
 					maxWidth={350}
 					theme="dark"
