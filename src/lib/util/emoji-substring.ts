@@ -1,14 +1,7 @@
 // Space, \n, \r
 const stopChars = [" ", String.fromCharCode(10), String.fromCharCode(13)];
 
-/**
- * Find ":string", or ":string:" from input text, via selectionStart position
- * @param {string} text - Input text value
- * @param {number} caret - Input selectStart - 1, for current character
- * @param {boolean} strict - Determines how to match strings
- * @returns {string} - String with colons or empty string
- */
-const emojiSubstring = function (text, caret, strict = true) {
+const emojiSubstring = function (text: string, caret: number, strict = true): string {
 
 	// Early reject check
 	if (!text.length

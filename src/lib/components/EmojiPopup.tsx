@@ -1,12 +1,13 @@
 import styles from "./../styles/EmojiPopup.module.css";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { gemoji } from "gemoji";
+import { Gemoji, gemoji } from "gemoji";
 import FuzzySearch from "fuzzy-search";
 import EmojiInput from "./EmojiInput";
 import EmojiList from "./EmojiList";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 const themeDefault = "auto";
+import { EmojiPopupProps, EmojiState, GemojiListItem } from "../types";
 
 const EmojiPopup = ({
 	input,
@@ -21,40 +22,42 @@ const EmojiPopup = ({
 	placeholder,
 	ariaLabel,
 	...props
-}) => {
+}: EmojiPopupProps) => {
 
 	const [themeMode, setThemeMode] = useState(theme);
 
 	const [active, setActive] = useState(false);
 	const [value, setValue] = useState("");
-	const [emoji, setEmoji] = useState({
+	const [emoji, setEmoji] = useState<EmojiState>({
 		list: [],
 		search: "",
 		select: "",
 	});
 	const [mouseNav, setMouseNav] = useState(false);
-	const wrapperRef = useRef(null);
-	const emojiContainerRef = useRef(null);
+	const wrapperRef = useRef<HTMLDivElement>(null);
+	const emojiContainerRef = useRef<HTMLDivElement>(null);
 	// TODO: Make sure this doesn't have any race conditions
 	const [selStart, setSelStart] = useState(-1);
 	const [elIndex, setElIndex] = useState(0);
 
 	// Reset index, and add display transition class
 	useEffect(() => {
-		if (active) {
-			emojiContainerRef.current.classList.add(styles["active"]);
-		} else {
-			setElIndex(0);
-			emojiContainerRef.current.classList.remove(styles["active"]);
+		if (!active) setElIndex(0);
+		if (emojiContainerRef?.current) {
+			if (active) {
+				emojiContainerRef.current.classList.add(styles["active"]);
+			} else {
+				emojiContainerRef.current.classList.remove(styles["active"]);
+			}
 		}
 	}, [active]);
 
 	// Theme change styling
 	useEffect(() => {
-		wrapperRef.current.classList.remove(styles["themelight"]);
-		wrapperRef.current.classList.remove(styles["themedark"]);
+		wrapperRef?.current?.classList.remove(styles["themelight"]);
+		wrapperRef?.current?.classList.remove(styles["themedark"]);
 		if (themeMode === "dark" || themeMode === "light") {
-			wrapperRef.current.classList.add(styles[`theme${themeMode}`]);
+			wrapperRef?.current?.classList.add(styles[`theme${themeMode}`]);
 		}
 	}, [themeMode]);
 
@@ -73,11 +76,13 @@ const EmojiPopup = ({
 	// Sync user prop state with internal state
 	useEffect(() => {
 		setUserPropInputText?.(value);
-		const inp = wrapperRef.current.children[0];
-		inp.selectionStart = selStart;
-		inp.selectionEnd = selStart;
-		// Focus input when user clicks list item
-		if (value) inp.focus();
+		const inp = wrapperRef?.current?.children[0] as HTMLInputElement;
+		if (inp) {
+			inp.selectionStart = selStart;
+			inp.selectionEnd = selStart;
+			// Focus input when user clicks list item
+			if (value) inp.focus();
+		}
 	}, [value]);
 
 	// Display fuzzy-matched emojis
@@ -90,12 +95,13 @@ const EmojiPopup = ({
 		if (emoji.select) {
 			// console.log([...emoji.select]);
 			// Calculate selection start, to fix going to the end of input
-			const inp = wrapperRef.current.children[0];
-			const delta = inp.selectionStart - value.indexOf(emoji.search);
-			setSelStart(inp.selectionStart - delta + emoji.select.length);
-			setValue(value.replace(`${emoji.search}`, emoji.select));
-			setActive(false);
-			setEmoji({ ...emoji, string: "", select: "" });
+			if (wrapperRef?.current) {
+				const delta = selStart - value.indexOf(emoji.search);
+				setSelStart(selStart - delta + emoji.select.length);
+				setValue(value.replace(`${emoji.search}`, emoji.select));
+				setActive(false);
+				setEmoji({ ...emoji, search: "", select: "" });
+			}
 		}
 	}, [emoji.select]);
 
@@ -105,7 +111,7 @@ const EmojiPopup = ({
 	}, [elIndex]);
 
 	const list = {
-		index (i) {
+		index (i: number) {
 			setElIndex(i);
 		},
 		next () {
@@ -114,7 +120,7 @@ const EmojiPopup = ({
 		prev () {
 			list.index(elIndex - 1 < 0 ? list.checkMax() - 1 : elIndex - 1);
 		},
-		select (override) {
+		select (override?: string) {
 			if (override) {
 				setEmoji({ ...emoji, select: override });
 			} else if (emoji.list.length && emoji.list[elIndex]) {
@@ -122,15 +128,15 @@ const EmojiPopup = ({
 			}
 		},
 		checkMax: () => listMax < emoji.list.length ? listMax : emoji.list.length,
-		update (str) {
+		update (str?: string) {
 			let list = emoji.list.slice();
 			if (str && str.length) {
 				str = str.replaceAll(":", "");
 				const search = fuzzysearch.search(str).slice(0, listMax);
-				list = search.length ? search : [];
+				list = search.length ? search as GemojiListItem[] : [];
 			}
 			if (elIndex >= list.length) setElIndex(0);
-			list = list.map((s, i) => {
+			list = list.map((s: any, i) => {
 				s.active = i === elIndex ? true : false;
 				return s;
 			});

@@ -6,7 +6,7 @@
 ![Recording](https://nicfontaine.com/dev/emoji-popup/rec-01.gif)
 
 ## 📁 About
-Type and insert emojis within your inputs, via their shortcode values.   
+Type and insert emojis within your inputs, via their shortcode values. Written in Typescript.   
 `:cool:` :cool:
 
 ## ⌨️ Install
@@ -46,12 +46,12 @@ export default function ExampleB () {
 ### 3. Provide an input component, state, and events from your parent component
 Also wrap in a container div, to align the input and popup   
 
-```jsx
+```tsx
 import { useState, useEffect } from "react";
 import EmojiPopup from "react-emoji-popup-lister"
 
 // Your input with props passed, including input value state
-function Input (props) {
+function Input (props: any) {
 	
   useEffect(() => { }, [props.value]);
   
@@ -73,15 +73,15 @@ export default function ExampleC () {
   const [text, setText] = useState("");
   useEffect(() => { }, [inputText]);
   
-  const handleChange = function (e) { };
+  const handleChange = function (e: React.ChangeEvent) { };
 
   return (
     {/* Container to align input and popup together */}
     <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
       <EmojiPopup
         input={Input}
-        inputText={text}
-        setInputText={setText}
+        value={text}
+        setValue={setText}
         onChange={handleChange}
       >
         <div>Child content...</div>
@@ -145,6 +145,7 @@ export default function ExampleC () {
 - Cursor over list, while using keyboard navigation still triggers hover change
 - Deleting "combo" emojis on Firefox doesn't remove the entire emoji
 - Escape to hide gets reset on successive typing
+- Cursor changing caret position not triggering changes
 
 ## 🖊️ License
 MIT © [nicfontaine](https://github.com/nicfontaine)

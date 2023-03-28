@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./../styles/EmojiPopup.module.css";
+import { EmojiListProps } from "../types";
 
 const EmojiList = function ({
 	active,
@@ -11,10 +12,10 @@ const EmojiList = function ({
 	maxWidth,
 	maxHeight,
 	footer,
-}) {
+}: EmojiListProps) {
 
-	const emojiListerRef = useRef(null);
-	const activeItem = useRef(null);
+	const emojiListerRef = useRef<HTMLDivElement>(null);
+	const activeItem = useRef<HTMLDivElement>(null);
 
 	// Keep emoji row item selection in view
 	// Disable functionality if user is navigating with mouse
@@ -27,16 +28,16 @@ const EmojiList = function ({
 	}, [emoji.list]);
 	
 	// List item events
-	const handleItemClick = function (e, _emoji) {
+	const handleItemClick = function (e: React.MouseEvent<HTMLElement>, _emoji: string) {
 		list.select(_emoji);
 		// TODO: Focus back to input
 	};
-	const handleItemMouseEnter = function (e, i) {
+	const handleItemMouseEnter = function (e: React.MouseEvent, i: number) {
 		setMouseNav(true);
 		setElIndex(i);
 		list.update();
 	};
-	const handleItemMouseLeave = function (e) {
+	const handleItemMouseLeave = function (e?: React.MouseEvent) {
 		setMouseNav(false);
 	};
 

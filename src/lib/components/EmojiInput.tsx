@@ -1,3 +1,5 @@
+import React from "react";
+import { EmojiInputProps } from "../types";
 import emojiSubstring from "../util/emoji-substring";
 import styles from "./../styles/EmojiPopup.module.css";
 
@@ -17,12 +19,12 @@ const EmojiInput = function ({
 	ariaLabel,
 	strict,
 	...props
-}) {
+}: EmojiInputProps) {
 
 	const InputField = input;
 
 	// Main input event interactivity on Keydown
-	const handleKeyDown = function (e) {
+	const handleKeyDown = function (e: React.KeyboardEvent<HTMLInputElement>) {
 		// User-passed event
 		props.onKeyDown?.(e);
 		setMouseNav(false);
@@ -48,11 +50,11 @@ const EmojiInput = function ({
 	};
 
 	// Determine emoji search and visibility on Keyup
-	const handleKeyUp = function (e) {
+	const handleKeyUp = function (e: React.KeyboardEvent<HTMLInputElement>) {
 		// User-passed event
 		props.onKeyUp?.(e);
 		setMouseNav(false);
-		const start = e.target.selectionStart - 1;
+		const start = selStart - 1;
 		var _active = active;
 		if (e.key === "Escape") {
 			setEmoji({ ...emoji, search: "" });
@@ -64,7 +66,7 @@ const EmojiInput = function ({
 			_active = true;
 		} else if (e.key === " ") {
 			_active = false;
-		} else if (e.key === "Backspace" && value[start] === ":") {
+		} else if (e.key === "Backspace" && value && value[start] === ":") {
 			_active = false;
 		}
 		const str = emojiSubstring(value, start, strict);
@@ -74,22 +76,21 @@ const EmojiInput = function ({
 	};
 
 	// Controlled input change
-	const handleChange = function (e) {
+	const handleChange = function (e: React.ChangeEvent<HTMLInputElement>) {
 		// User-passed event
 		props.onChange?.(e);
-		// selStart = e.target.selectionStart;
-		setSelStart(e.target.selectionStart);
+		if (e.target.selectionStart) setSelStart(e.target.selectionStart);
 		setValue(e.target.value);
 	};
 
 	// User-passed event only
-	const handleClick = function (e) {
+	const handleClick = function (e: React.MouseEvent) {
 		props.onClick?.(e);
 	};
-	const handleFocus = function (e) {
+	const handleFocus = function (e: React.FocusEvent) {
 		props.onFocus?.(e);
 	};
-	const handleBlur = function (e) {
+	const handleBlur = function (e: React.FocusEvent) {
 		props.onBlur?.(e);
 	};
 	

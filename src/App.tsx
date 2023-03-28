@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import EmojiPopup from "./lib/index";
 // import EmojiPopup from "react-emoji-popup-lister";
 
 // Custom input (optional)
-const Input = function (props) {
+const Input = function (props: any) {
 
 	useEffect(() => { /* Input value state change passed back */ }, [props.value]);
 
@@ -31,10 +31,10 @@ const App = function () {
 	useEffect(() => { /* Input value state change */ }, [val]);
 
 	// Additional Event handlers for input (optional)
-	const handleKeyDown = (e) => { /* Keydown from parent */ };
-	const handleKeyUp = (e) => { /* Keyup from parent */ };
-	const handleChange = (e) => { /* Change from parent */ };
-	const handleClick = (e) => { /* Click from parent */ };
+	const handleKeyDown = (e: React.KeyboardEvent) => { /* Keydown from parent */ };
+	const handleKeyUp = (e: React.KeyboardEvent) => { /* Keyup from parent */ };
+	const handleChange = (e: React.ChangeEvent) => { /* Change from parent */ };
+	const handleClick = (e: React.MouseEvent) => { /* Click from parent */ };
 	// ...
 
 	return (
