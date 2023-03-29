@@ -146,53 +146,49 @@ const EmojiPopup = ({
 	};
 
 	return (
-
-		<>
 			
-			<div ref={wrapperRef} className={styles.wrapper}>
+		<div ref={wrapperRef} className={styles.wrapper}>
 
-				<EmojiInput
-					input={input}
-					value={value}
-					setValue={setValue}
+			<EmojiInput
+				input={input}
+				value={value}
+				setValue={setValue}
+				active={active}
+				setActive={setActive}
+				list={list}
+				emoji={emoji}
+				setEmoji={setEmoji}
+				selStart={selStart}
+				setSelStart={setSelStart}
+				setMouseNav={setMouseNav}
+				placeholder={placeholder}
+				ariaLabel={ariaLabel}
+				strict={strict}
+				{...props}
+			></EmojiInput>
+			
+			<div
+				className={styles.container}
+				aria-label={active ? "Emoji lister popup" : ""}
+				ref={emojiContainerRef}
+			>
+				<EmojiList
 					active={active}
-					setActive={setActive}
 					list={list}
-					emoji={emoji}
-					setEmoji={setEmoji}
-					selStart={selStart}
-					setSelStart={setSelStart}
+					setElIndex={setElIndex}
+					mouseNav={mouseNav}
 					setMouseNav={setMouseNav}
-					placeholder={placeholder}
-					ariaLabel={ariaLabel}
-					strict={strict}
-					{...props}
-				></EmojiInput>
-				
-				<div
-					className={styles.container}
-					aria-label={active ? "Emoji lister popup" : ""}
-					ref={emojiContainerRef}
-				>
-					<EmojiList
-						active={active}
-						list={list}
-						setElIndex={setElIndex}
-						mouseNav={mouseNav}
-						setMouseNav={setMouseNav}
-						emoji={emoji}
-						maxWidth={maxWidth}
-						maxHeight={maxHeight}
-						footer={footer}
-					></EmojiList>
-				
-				</div>
-
-				{ props.children ? { ...props.children } : null }
-				
+					emoji={emoji}
+					maxWidth={maxWidth}
+					maxHeight={maxHeight}
+					footer={footer}
+				></EmojiList>
+			
 			</div>
 
-		</>
+			{ props.children ? { ...props.children } : null }
+			
+		</div>
 		
 	);  
 	

@@ -1,7 +1,7 @@
 {
   "name": "react-emoji-popup-lister",
   "description": "React emoji search & select by colon syntax, with keyboard navigation",
-  "version": "0.2.0",
+  "version": "0.2.12",
   "author": "Nic Fontaine <nic@nicfontaine.com>",
   "license": "MIT",
   "repository": {
@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "fuzzy-search": "^3.2.1",
+		"@types/fuzzy-search": "^2.1.2",
     "gemoji": "^8.0.0"
   },
   "scripts": {
@@ -55,6 +56,9 @@
     "keyboard",
     "search"
   ],
+	"peerDependencies": {
+		"react": "^18.2.0"
+	},
   "devDependencies": {
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.0",
@@ -64,7 +68,6 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/fuzzy-search": "^2.1.2",
     "@types/react": "^18.0.27",
     "@types/react-dom": "18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.51.0",

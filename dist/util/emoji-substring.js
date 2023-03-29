@@ -1,6 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // Space, \n, \r
-const stopChars = [" ", String.fromCharCode(10), String.fromCharCode(13)];
-const emojiSubstring = function (text, caret, strict = true) {
+var stopChars = [" ", String.fromCharCode(10), String.fromCharCode(13)];
+var emojiSubstring = function (text, caret, strict) {
+    if (strict === void 0) { strict = true; }
     // Early reject check
     if (!text.length
         || text[caret] === " "
@@ -9,10 +12,10 @@ const emojiSubstring = function (text, caret, strict = true) {
         return "";
     }
     // Store partial strings, and indices
-    let rtxt = "";
-    let ltxt = "";
-    let li = caret;
-    let ri = caret;
+    var rtxt = "";
+    var ltxt = "";
+    var li = caret;
+    var ri = caret;
     // Increment from caret to end of word. Stop on: space, \n, \r, or end of value
     while (text[ri] && stopChars.indexOf(text[ri]) < 0) {
         rtxt += text[ri];
@@ -60,7 +63,7 @@ const emojiSubstring = function (text, caret, strict = true) {
     }
     ltxt = ltxt.split("").reverse()
         .join("");
-    const substring = `${ltxt}${rtxt}`;
+    var substring = "".concat(ltxt).concat(rtxt);
     return substring || "";
 };
-export default emojiSubstring;
+exports.default = emojiSubstring;
