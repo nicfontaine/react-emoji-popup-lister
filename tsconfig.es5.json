@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5",
+    "lib": ["ES2020", "DOM", "ES2021.String"],
+		"rootDir": "src/lib/",
+    "outDir": "./dist/es5",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"downlevelIteration": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "react"
+  },
+  "include": ["src/lib/**/*", "src/typings.d.ts"],
+	"exclude": ["node_modules"]
+}

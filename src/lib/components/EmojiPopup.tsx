@@ -25,7 +25,6 @@ const EmojiPopup = ({
 }: EmojiPopupProps) => {
 
 	const [themeMode, setThemeMode] = useState(theme);
-
 	const [active, setActive] = useState(false);
 	const [value, setValue] = useState("");
 	const [emoji, setEmoji] = useState<EmojiState>({
@@ -54,10 +53,12 @@ const EmojiPopup = ({
 
 	// Theme change styling
 	useEffect(() => {
-		wrapperRef?.current?.classList.remove(styles["themelight"]);
-		wrapperRef?.current?.classList.remove(styles["themedark"]);
-		if (themeMode === "dark" || themeMode === "light") {
-			wrapperRef?.current?.classList.add(styles[`theme${themeMode}`]);
+		if (wrapperRef?.current) {
+			wrapperRef?.current?.classList.remove(styles["themelight"]);
+			wrapperRef?.current?.classList.remove(styles["themedark"]);
+			if (themeMode === "dark" || themeMode === "light") {
+				wrapperRef?.current?.classList.add(styles[`theme${themeMode}`]);
+			}
 		}
 	}, [themeMode]);
 
@@ -76,12 +77,14 @@ const EmojiPopup = ({
 	// Sync user prop state with internal state
 	useEffect(() => {
 		setUserPropInputText?.(value);
-		const inp = wrapperRef?.current?.children[0] as HTMLInputElement;
-		if (inp) {
-			inp.selectionStart = selStart;
-			inp.selectionEnd = selStart;
-			// Focus input when user clicks list item
-			if (value) inp.focus();
+		if (wrapperRef?.current) {
+			const inp = wrapperRef?.current?.children[0] as HTMLInputElement;
+			if (inp) {
+				inp.selectionStart = selStart;
+				inp.selectionEnd = selStart;
+				// Focus input when user clicks list item
+				if (value) inp.focus();
+			}
 		}
 	}, [value]);
 

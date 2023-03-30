@@ -12,6 +12,8 @@
 /build
 
 dist
+dist-esm
+_bundles
 
 # misc
 .DS_Store

@@ -1,22 +1,26 @@
 {
 	"compilerOptions": {
+		"module": "es6",
 		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext", "es5", "ScriptHost", "ES2016.Array.Include"],
+		"lib": ["dom", "es2015", "ES2021.String", "ES2020"],
+		"rootDir": "src/lib/",
+		"outDir": "./dist/es6",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"rootDir": "src/lib/",
-		"outDir": "dist",
 		"incremental": true,
 		"esModuleInterop": true,
-		"module": "commonjs",
-		"declaration": true,
+		"moduleResolution": "node",
+		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"jsx": "preserve"
+		"jsx": "react"
 	},
-	"include": ["src/lib/**/*"],
+	"include": ["src/lib/**/*", "src/typings.d.ts"],
 	"exclude": ["node_modules"]
 }
