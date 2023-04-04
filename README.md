@@ -1,8 +1,6 @@
 # React Emoji Popup Lister
 > Slack-lick emoji list and select via keyboard
 
-[![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://github.com/nicfontaine/react-emoji-popup-lister/tree/js)
-
 ![Recording](https://nicfontaine.com/dev/emoji-popup/rec-01.gif)
 
 ## 📁 About
@@ -70,8 +68,8 @@ function Input (props) {
 // Parend component with state, passed input, events, etc.
 export default function ExampleC () {
 	
-  const [text, setText] = useState("");
-  useEffect(() => { }, [inputText]);
+  const [val, setVal] = useState("");
+  useEffect(() => { }, [val]);
   
   const handleChange = function (e) { };
 
@@ -80,8 +78,8 @@ export default function ExampleC () {
     <div style={{ maxWidth: "400px", margin: "1rem auto 0"}}>
       <EmojiPopup
         input={Input}
-        inputText={text}
-        setInputText={setText}
+        value={val}
+        setValue={setVal}
         onChange={handleChange}
       >
         <div>Child content...</div>
