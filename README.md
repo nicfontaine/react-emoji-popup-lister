@@ -1,7 +1,7 @@
 # React Emoji Popup Lister
 > Slack-lick emoji list and select via keyboard
 
-[![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://www.npmjs.com/package/react-emoji-popup-lister)
+[![NPM](https://img.shields.io/npm/v/react-emoji-popup-lister.svg)](https://github.com/nicfontaine/react-emoji-popup-lister/tree/js)
 
 ![Recording](https://nicfontaine.com/dev/emoji-popup/rec-01.gif)
 
