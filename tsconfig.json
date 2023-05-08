@@ -4,7 +4,7 @@
 		"target": "es5",
 		"lib": ["dom", "es2015", "ES2021.String", "ES2020"],
 		"rootDir": "src/lib/",
-		"outDir": "./dist/es6",
+		"outDir": "./dist",
 		"sourceMap": true,
 		"declaration": true,
 		"declarationMap": true,
@@ -20,7 +20,6 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
-		"plugins": [{ "name": "typescript-plugin-css-modules" }]
 	},
 	"include": ["src/lib/**/*", "src/typings.d.ts"],
 	"exclude": ["node_modules"]

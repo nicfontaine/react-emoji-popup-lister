@@ -1,7 +1,6 @@
 import React from "react";
 import { EmojiInputProps } from "../types";
 import emojiSubstring from "../util/emoji-substring";
-import styles from "./../styles/EmojiPopup.module.css";
 
 const EmojiInput = function ({
 	input,
@@ -107,7 +106,7 @@ const EmojiInput = function ({
 					onBlur={handleBlur}
 					placeholder={placeholder || ""}
 					aria-label={ariaLabel || "Generic input with emoji support"}
-					className={styles.input}
+					className="input"
 				/>
 			) : (
 				<input
@@ -120,9 +119,21 @@ const EmojiInput = function ({
 					aria-label={ariaLabel || "Generic input with emoji support"}
 					onFocus={handleFocus}
 					onBlur={handleBlur}
-					className={styles.input}
+					className="input"
 				></input>
 			)}
+
+			<style>{`
+				.input,
+				.wrapper > input,
+				.wrapper > textarea {
+					width: 100%;
+					box-sizing: border-box;
+					font-size: inherit;
+					font-family: inherit;
+				}
+			`}</style>
+
 		</>
 	);
 

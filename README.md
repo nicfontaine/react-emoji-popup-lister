@@ -10,6 +10,8 @@ Type and insert emojis within your inputs, via their shortcode values. Written i
 `:cool:` :cool:
 
 ## ⌨️ Install
+❗ [ESM only package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)   
+
 ```bash
 npm i -s react-emoji-popup-lister
 ```
