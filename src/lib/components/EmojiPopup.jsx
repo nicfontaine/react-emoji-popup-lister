@@ -1,4 +1,3 @@
-import styles from "./../styles/EmojiPopup.module.css";
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { gemoji } from "gemoji";
@@ -8,7 +7,7 @@ import EmojiList from "./EmojiList";
 const fuzzysearch = new FuzzySearch(gemoji, ["names"], { sort: true });
 const themeDefault = "auto";
 
-const EmojiPopup = ({
+const EmojiPopupInput = ({
 	input,
 	value: userPropInputText,
 	setValue: setUserPropInputText,
@@ -42,19 +41,19 @@ const EmojiPopup = ({
 	// Reset index, and add display transition class
 	useEffect(() => {
 		if (active) {
-			emojiContainerRef.current.classList.add(styles["active"]);
+			emojiContainerRef.current.classList.add("active");
 		} else {
 			setElIndex(0);
-			emojiContainerRef.current.classList.remove(styles["active"]);
+			emojiContainerRef.current.classList.remove("active");
 		}
 	}, [active]);
 
 	// Theme change styling
 	useEffect(() => {
-		wrapperRef.current.classList.remove(styles["themelight"]);
-		wrapperRef.current.classList.remove(styles["themedark"]);
+		wrapperRef.current.classList.remove("themelight");
+		wrapperRef.current.classList.remove("themedark");
 		if (themeMode === "dark" || themeMode === "light") {
-			wrapperRef.current.classList.add(styles[`theme${themeMode}`]);
+			wrapperRef.current.classList.add(`theme${themeMode}`);
 		}
 	}, [themeMode]);
 
@@ -143,7 +142,7 @@ const EmojiPopup = ({
 
 		<>
 			
-			<div ref={wrapperRef} className={styles.wrapper}>
+			<div ref={wrapperRef} className="wrapper">
 
 				<EmojiInput
 					input={input}
@@ -164,7 +163,7 @@ const EmojiPopup = ({
 				></EmojiInput>
 				
 				<div
-					className={styles.container}
+					className="container"
 					aria-label={active ? "Emoji lister popup" : ""}
 					ref={emojiContainerRef}
 				>
@@ -186,10 +185,54 @@ const EmojiPopup = ({
 				
 			</div>
 
+			<style>{`
+				.wrapper {
+					position: relative;
+				}
+				.themedark.wrapper {
+					color: #ddd;
+				}
+				.themelight.wrapper {
+					color: #222;
+				}
+				.input,
+				.wrapper > input,
+				.wrapper > textarea {
+					width: 100%;
+					box-sizing: border-box;
+					font-size: inherit;
+					font-family: inherit;
+				}
+				.container {
+					position: absolute;
+					z-index: 20;
+					bottom: -7px;
+					border-radius: 8px;
+					overflow: hidden;
+					transition: all 0.1s;
+					opacity: 0;
+					transform: translateY(96%);
+				}
+				.container.active {
+					opacity: 1;
+					transform: translateY(100%);
+				}
+				.themedark .container {
+					background: rgba(0,0,0,0.9);
+					box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+					/* border: 2px solid rgba(255,255,255,0.14); */
+				}
+				.themelight .container {
+					background: rgba(255, 255, 255, 1);
+					box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+					/* border: 2px solid rgba(0, 0, 0, 0.14); */
+				}
+			`}</style>
+
 		</>
 		
 	);  
 	
 };
 
-export default EmojiPopup;
+export default EmojiPopupInput;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-import EmojiPopup from "./lib/index";
-// import EmojiPopup from "react-emoji-popup-lister";
+import EmojiPopupInput from "./lib/index";
+// import EmojiPopupInput from "react-emoji-popup-lister";
 
 // Custom input (optional)
 const Input = function (props) {
@@ -45,7 +45,7 @@ const App = function () {
 
 			{/* Container to align input and popup together */}
 			<div style={{ maxWidth: "400px", margin: "1rem auto 0" }}>
-				<EmojiPopup
+				<EmojiPopupInput
 					// State (optional) - Use if you want the value, or for useEffect hooks
 					value={val}
 					setValue={setVal}
@@ -63,7 +63,7 @@ const App = function () {
 					onKeyUp={handleKeyUp}
 				>
 					{/* <div className="">I am a child</div> */}
-				</EmojiPopup>
+				</EmojiPopupInput>
 			</div>
 
 			<h2>⌨️ 🥰</h2>

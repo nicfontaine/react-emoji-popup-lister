@@ -11,7 +11,6 @@ require("core-js/modules/es.regexp.exec.js");
 require("core-js/modules/es.string.search.js");
 require("core-js/modules/es.string.replace.js");
 require("core-js/modules/esnext.string.replace-all.js");
-var _EmojiPopupModule = _interopRequireDefault(require("./../styles/EmojiPopup.module.css"));
 var _react = _interopRequireWildcard(require("react"));
 var _gemoji = require("gemoji");
 var _fuzzySearch = _interopRequireDefault(require("fuzzy-search"));
@@ -19,9 +18,9 @@ var _EmojiInput = _interopRequireDefault(require("./EmojiInput"));
 var _EmojiList = _interopRequireDefault(require("./EmojiList"));
 var _jsxRuntime = require("react/jsx-runtime");
 const _excluded = ["input", "value", "setValue", "theme", "strict", "listMax", "maxWidth", "maxHeight", "footer", "placeholder", "ariaLabel"];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -33,7 +32,7 @@ const fuzzysearch = new _fuzzySearch.default(_gemoji.gemoji, ["names"], {
   sort: true
 });
 const themeDefault = "auto";
-const EmojiPopup = _ref => {
+const EmojiPopupInput = _ref => {
   let {
       input,
       value: userPropInputText,
@@ -66,19 +65,19 @@ const EmojiPopup = _ref => {
   // Reset index, and add display transition class
   (0, _react.useEffect)(() => {
     if (active) {
-      emojiContainerRef.current.classList.add(_EmojiPopupModule.default["active"]);
+      emojiContainerRef.current.classList.add("active");
     } else {
       setElIndex(0);
-      emojiContainerRef.current.classList.remove(_EmojiPopupModule.default["active"]);
+      emojiContainerRef.current.classList.remove("active");
     }
   }, [active]);
 
   // Theme change styling
   (0, _react.useEffect)(() => {
-    wrapperRef.current.classList.remove(_EmojiPopupModule.default["themelight"]);
-    wrapperRef.current.classList.remove(_EmojiPopupModule.default["themedark"]);
+    wrapperRef.current.classList.remove("themelight");
+    wrapperRef.current.classList.remove("themedark");
     if (themeMode === "dark" || themeMode === "light") {
-      wrapperRef.current.classList.add(_EmojiPopupModule.default["theme".concat(themeMode)]);
+      wrapperRef.current.classList.add("theme".concat(themeMode));
     }
   }, [themeMode]);
 
@@ -168,10 +167,10 @@ const EmojiPopup = _ref => {
       }));
     }
   };
-  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
-    children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+  return /*#__PURE__*/(0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+    children: [/*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
       ref: wrapperRef,
-      className: _EmojiPopupModule.default.wrapper,
+      className: "wrapper",
       children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_EmojiInput.default, _objectSpread({
         input: input,
         value: value,
@@ -188,7 +187,7 @@ const EmojiPopup = _ref => {
         ariaLabel: ariaLabel,
         strict: strict
       }, props)), /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-        className: _EmojiPopupModule.default.container,
+        className: "container",
         "aria-label": active ? "Emoji lister popup" : "",
         ref: emojiContainerRef,
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_EmojiList.default, {
@@ -203,8 +202,10 @@ const EmojiPopup = _ref => {
           footer: footer
         })
       }), props.children ? _objectSpread({}, props.children) : null]
-    })
+    }), /*#__PURE__*/(0, _jsxRuntime.jsx)("style", {
+      children: "\n\t\t\t\t.wrapper {\n\t\t\t\t\tposition: relative;\n\t\t\t\t}\n\t\t\t\t.themedark.wrapper {\n\t\t\t\t\tcolor: #ddd;\n\t\t\t\t}\n\t\t\t\t.themelight.wrapper {\n\t\t\t\t\tcolor: #222;\n\t\t\t\t}\n\t\t\t\t.input,\n\t\t\t\t.wrapper > input,\n\t\t\t\t.wrapper > textarea {\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\tbox-sizing: border-box;\n\t\t\t\t\tfont-size: inherit;\n\t\t\t\t\tfont-family: inherit;\n\t\t\t\t}\n\t\t\t\t.container {\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\tz-index: 20;\n\t\t\t\t\tbottom: -7px;\n\t\t\t\t\tborder-radius: 8px;\n\t\t\t\t\toverflow: hidden;\n\t\t\t\t\ttransition: all 0.1s;\n\t\t\t\t\topacity: 0;\n\t\t\t\t\ttransform: translateY(96%);\n\t\t\t\t}\n\t\t\t\t.container.active {\n\t\t\t\t\topacity: 1;\n\t\t\t\t\ttransform: translateY(100%);\n\t\t\t\t}\n\t\t\t\t.themedark .container {\n\t\t\t\t\tbackground: rgba(0,0,0,0.9);\n\t\t\t\t\tbox-shadow: 0 4px 18px rgba(0,0,0,0.6);\n\t\t\t\t\t/* border: 2px solid rgba(255,255,255,0.14); */\n\t\t\t\t}\n\t\t\t\t.themelight .container {\n\t\t\t\t\tbackground: rgba(255, 255, 255, 1);\n\t\t\t\t\tbox-shadow: 0 4px 18px rgba(0,0,0,0.3);\n\t\t\t\t\t/* border: 2px solid rgba(0, 0, 0, 0.14); */\n\t\t\t\t}\n\t\t\t"
+    })]
   });
 };
-var _default = EmojiPopup;
+var _default = EmojiPopupInput;
 exports.default = _default;

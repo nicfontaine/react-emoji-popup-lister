@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _emojiSubstring = _interopRequireDefault(require("../util/emoji-substring"));
-var _EmojiPopupModule = _interopRequireDefault(require("./../styles/EmojiPopup.module.css"));
 var _jsxRuntime = require("react/jsx-runtime");
 const _excluded = ["input", "value", "setValue", "active", "setActive", "list", "emoji", "setEmoji", "selStart", "setSelStart", "setMouseNav", "placeholder", "ariaLabel", "strict"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -129,7 +128,7 @@ const EmojiInput = function EmojiInput(_ref) {
       onBlur: handleBlur,
       placeholder: placeholder || "",
       "aria-label": ariaLabel || "Generic input with emoji support",
-      className: _EmojiPopupModule.default.input
+      className: "input"
     }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("input", {
       value: value,
       onClick: handleClick,
@@ -140,7 +139,7 @@ const EmojiInput = function EmojiInput(_ref) {
       "aria-label": ariaLabel || "Generic input with emoji support",
       onFocus: handleFocus,
       onBlur: handleBlur,
-      className: _EmojiPopupModule.default.input
+      className: "input"
     })
   });
 };

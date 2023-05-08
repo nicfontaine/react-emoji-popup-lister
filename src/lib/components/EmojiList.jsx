@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import styles from "./../styles/EmojiPopup.module.css";
+import EmojiPopupHowTo from "./EmojiPopupHowTo";
 
 const EmojiList = function ({
 	active,
@@ -44,7 +44,7 @@ const EmojiList = function ({
 		<>
 			<div
 				ref={emojiListerRef}
-				className={styles.lister}
+				className="lister"
 				style={{
 					maxHeight: maxHeight,
 					maxWidth: maxWidth,
@@ -56,7 +56,7 @@ const EmojiList = function ({
 							return (
 								<div
 									aria-label={`Emoji list item: ${emoji.description}`}
-									className={`${styles.item} ${emoji.active ? styles.active : ""}`}
+									className={`item ${emoji.active ? "active" : ""}`}
 									key={emoji.emoji}
 									ref={emoji.active ? activeItem : null}
 									onClick={(e) => {
@@ -69,23 +69,108 @@ const EmojiList = function ({
 										handleItemMouseLeave();
 									}}
 								>
-									<div className={styles.inner}>
-										<div className={styles.emoji}>{emoji.emoji}</div>
-										<code className={styles.code}>:{emoji.names.join(",")}</code>
+									<div className="inner">
+										<div className="emoji">{emoji.emoji}</div>
+										<code className="code">:{emoji.names.join(",")}</code>
 									</div>
 								</div>
 							);
-						}) : <div className={styles.itemNull}>{emoji.search.length ? "No matches found" : "type for emoji search..."}</div> }
+						}) : <div className="itemNull">{emoji.search.length ? "No matches found" : "type for emoji search..."}</div> }
 					</>
 				) : null}
 			</div>
-			{footer ? (
-				<div className={styles.howto} aria-label="Emoji popup search total, and how-to">
-					<div className={styles.left}>Total: <strong>{emoji.list.length}</strong></div>
-					<div className={styles.middle}>🔼 🔽</div>
-					<div className={styles.right}>⏎</div>
-				</div>
-			) : null}
+
+			{footer ? <EmojiPopupHowTo number={emoji.list.length} /> : null}
+
+			<style>{`
+				.lister {
+					display: flex;
+					flex-direction: column;
+					overflow-y: scroll;
+					min-width: 200px;
+					min-height: 60px;
+				}
+				.item {
+					cursor: pointer;
+					position: relative;
+				}
+				.item,
+				.itemNull {
+					padding: 0.35rem 0.5rem 0.35rem 0.65rem;
+					display: flex;
+					font-size: 0.9rem;
+				}
+				.itemNull {
+					text-align: center;
+					justify-content: center;
+					padding-top: 0.6rem;
+				}
+				.themedark .item {
+					border-bottom: 1px solid rgba(38, 38, 38, 0.9);
+				}
+				.themelight .item {
+					border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+				}
+				.item.active {
+					border-bottom: 1px solid transparent;
+					z-index: 5;
+				}
+				.themedark .item.active {
+					background: rgb(40, 40, 40);
+					border-bottom: 1px solid rgb(43, 43, 43);
+				}
+				.themelight .item.active {
+					background: rgba(0,0,0,0.07);
+					border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+					box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.15);
+					/* background: #fff; */
+				}
+				.themelight .item.active .emoji {
+					text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+				}
+				.item.active:before {
+					content: "";
+					position: absolute;
+					left: 0;
+					top: -1px;
+					bottom: -1px;
+					width: 4px;
+				}
+				.themedark .item.active:before {
+					background: rgb(88, 53, 227);
+				}
+				.themelight .item.active:before {
+					background: rgb(33, 166, 157);
+				}
+				.item:last-child {
+					/* border-bottom: none; */
+				}
+				.item .inner {
+					display: flex;
+					min-width: 0;
+					text-overflow: ellipsis;
+					overflow-x: hidden;
+				}
+				.item .emoji {
+					margin-right: 0.5rem;
+					margin-left: 0.2rem;
+					font-size: 1rem;
+					/* width: 1.8rem; */
+					display: flex;
+					flex-basis: fit-content;
+				}
+				.item .code,
+				.item .emoji {
+					align-self: center;
+				}
+				.item .code {
+					font-size: 0.86rem;
+					min-width: 0;
+					text-overflow: ellipsis;
+					overflow-x: hidden;
+				}
+			`}</style>
+
 		</>
 	);
 	
